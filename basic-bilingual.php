@@ -3,7 +3,7 @@
 Plugin Name: Basic Bilingual
 Plugin URI: http://dev.wp-plugins.org/wiki/BasicBilingual
 Description: Makes managing your blog with two languages less cumbersome.
-Version: 0.1
+Version: 0.2
 Author: Stephanie Booth
 Author URI: http://climbtothestars.org/
 
@@ -24,8 +24,16 @@ Author URI: http://climbtothestars.org/
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
+INFORMATION:
+============
 
 View http://dev.wp-plugins.org/wiki/BasicBilingual for information about this plugin, what it does and how to use it. In short, it has to do with blogging in more than one language.
+
+CHANGELOG:
+==========
+
+0.1  - Initial release
+0.2  - Fixed update bug for other-excerpt (function name was wrong in action statement!) 28.01.2005
 
 SETTINGS:
 =========
@@ -162,14 +170,6 @@ function bb_update_meta($id, $field)
 	}
 }
 
-// update tags custom value for given post
-// DEBUG backup if the one above doesn't work
-function bb_update_post_meta($id, $field) {
-	delete_post_meta($id, $field);
-	$setting = $_POST[$field];
-	add_post_meta($id, $field, $setting);
-        }
-
 // update language custom field
 function bb_update_language($id)
 {
@@ -192,6 +192,6 @@ add_action('save_post', 'bb_update_language');
 add_action('publish_post', 'bb_update_language');
 
 add_action('edit_post', 'bb_update_other_excerpt');
-add_action('save_post', 'bb_update_excerpt');
-add_action('publish_post', 'bb_update_excerpt');
+add_action('save_post', 'bb_update_other_excerpt');
+add_action('publish_post', 'bb_update_other_excerpt');
 ?>
