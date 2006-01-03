@@ -3,7 +3,7 @@
 Plugin Name: Basic Bilingual
 Plugin URI: http://dev.wp-plugins.org/wiki/BasicBilingual
 Description: Makes managing your blog with two languages less cumbersome.
-Version: 0.2
+Version: 0.21
 Author: Stephanie Booth
 Author URI: http://climbtothestars.org/
 
