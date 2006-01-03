@@ -34,6 +34,9 @@ CHANGELOG:
 
 0.1  - Initial release
 0.2  - Fixed update bug for other-excerpt (function name was wrong in action statement!) 28.01.2005
+0.21 - Fixed for WP 2.0 by replacing $postdata->ID with $post->ID (31.12.2005)
+	 - Cosmetic changes to the edit form (03.01.2006)
+	 - added hooks to deal with pages (03.01.2006)
 
 SETTINGS:
 =========
@@ -123,12 +126,12 @@ function bb_the_other_excerpt($before='<div class="other-excerpt" lang="%lg"><p>
 // output textarea to easily add other-excerpt in admin menu (addition to the post form)
 function add_other_excerpt_textarea() {
 	
-	global $postdata;
+	global $post;
 	
-	$excerpt = get_post_meta($postdata->ID, 'other-excerpt', true);
+	$excerpt = get_post_meta($post->ID, 'other-excerpt', true);
 	
 	echo '<fieldset id="postotherexcerpt" style="clear: both;"><legend>' . __('Other Language Excerpt', 'BasicBilingual') . '</legend>';
-	echo '<div><textarea rows="4" cols="82" name="other-excerpt" id="other-excerpt">';
+	echo '<div><textarea rows="4" cols="80" name="other-excerpt" id="other-excerpt">';
 	print($excerpt);
 	echo '</textarea></div></fieldset>';
 
@@ -138,16 +141,16 @@ function add_other_excerpt_textarea() {
 function add_language_box()
 {
  	global $bb_languages;
- 	global $postdata;
+ 	global $post;
  	
  	// retrieving existing language, or setting to default if new post
- 	$current_language=get_post_meta($postdata->ID, 'language', true);
+ 	$current_language=get_post_meta($post->ID, 'language', true);
  	if(empty($current_language))
  	{
  		$current_language=$bb_languages[0];
  	}
 
- 	print('<fieldset id="languagediv" style="height: 3.5em; width: 5em; position: absolute; top: 9.5em; left: 42em;">
+ 	print('<fieldset id="languagediv" style="height: 3.5em; width: 5em; position: absolute; top: 10em; left: 42em;">
       <legend>');
       echo __('Language');
       print('</legend>
@@ -186,6 +189,8 @@ add_action('simple_edit_form', 'add_other_excerpt_textarea');
 add_action('edit_form_advanced', 'add_other_excerpt_textarea');
 add_action('simple_edit_form', 'add_language_box');
 add_action('edit_form_advanced', 'add_language_box');
+add_action('edit_page_form', 'add_language_box');
+add_action('edit_page_form', 'add_other_excerpt_textarea');
 
 add_action('edit_post', 'bb_update_language');
 add_action('save_post', 'bb_update_language');
