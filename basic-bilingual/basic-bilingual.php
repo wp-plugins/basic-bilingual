@@ -1,14 +1,13 @@
 <?php
 /*
 Plugin Name: Basic Bilingual
-Plugin URI: http://dev.wp-plugins.org/wiki/BasicBilingual
-Description: Makes managing your blog with two languages less cumbersome.
-Version: 0.21
+Plugin URI: http://climbtothestars.org/archives/2007/11/30/basic-bilingual-03-for-multilingual-blogging/Description: Makes managing your blog with two languages less cumbersome.
+Version: 0.31
 Author: Stephanie Booth
 Author URI: http://climbtothestars.org/
 
 
-  Copyright 2005  Stephanie Booth  (email : steph@climbtothestars.org)
+  Copyright 2005-2007  Stephanie Booth  (email : steph@climbtothestars.org)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -27,7 +26,7 @@ Author URI: http://climbtothestars.org/
 INFORMATION:
 ============
 
-View http://dev.wp-plugins.org/wiki/BasicBilingual for information about this plugin, what it does and how to use it. In short, it has to do with blogging in more than one language.
+View http://climbtothestars.org/archives/2007/11/30/basic-bilingual-03-for-multilingual-blogging/ for information about this plugin, what it does and how to use it. In short, it has to do with blogging in more than one language.
 
 CHANGELOG:
 ==========
@@ -37,15 +36,66 @@ CHANGELOG:
 0.21 - Fixed for WP 2.0 by replacing $postdata->ID with $post->ID (31.12.2005)
 	 - Cosmetic changes to the edit form (03.01.2006)
 	 - added hooks to deal with pages (03.01.2006)
+0.3  - Added stripslashes to get rid of slash problem
+     - No need to add template tag anymore for other-excerpt -- added automagically (30.11.2007)
+     - Added class to excerpt first-child
+0.31 - Attempted to fix vanishing excerpts problem -- see http://markjaquith.wordpress.com/2007/01/28/ 
+       authorization-and-intentionorigination-verification-when-using-the-edit_post-hook/
 
 SETTINGS:
 =========
 
-Replace "en" and "fr" with your two languages in the array, with two-letter codes.
+Replace "en" and "fr" with your two languages in the array below, with two-letter codes.
 
 */
 
 $bb_languages=array('en', 'fr');
+
+/*
+
+CSS:
+====
+
+You might want define CSS rules similar to these for your stylesheet:
+
+.other-excerpt {
+	font-style: italic;
+	background: #fff;
+	padding-left: 1em;
+	padding-right: 1em;
+	border: 1px solid #ccc;
+}
+
+.other-excerpt:lang(fr) p.oe-first-child:before {
+	content: "[fr] ";
+	font-weight: bold;
+}
+
+.other-excerpt:lang(en) p.oe-first-child:before {
+	content: "[en] ";
+	font-weight: bold;
+}
+
+.bb-post-separator {
+	display: none;
+}
+
+div.hentry:lang(fr) .entry-title:after {
+  	content: " [fr] ";
+  	vertical-align: middle;
+  	font-size: 80%;
+  	color: #bbb;
+}
+
+div.hentry:lang(en) .entry-title:after {
+  	content: " [en] ";
+  	vertical-align: middle;
+  	font-size: 80%;
+  	color: #bbb;
+}
+
+*/
+
 
 
 // retrieve the language of the post
@@ -101,7 +151,7 @@ function bb_the_language()
 }
 
 // this outputs the other language excerpt
-function bb_the_other_excerpt($before='<div class="other-excerpt" lang="%lg"><p>', $after='</p></div>')
+function bb_get_the_other_excerpt($before='<div class="other-excerpt" lang="%lg"><p class="oe-first-child">', $after='</p></div>')
 {
 	$post_other_excerpt=get_post_custom_values("other-excerpt");
 	$the_other_excerpt=$post_other_excerpt['0'];
@@ -115,11 +165,30 @@ function bb_the_other_excerpt($before='<div class="other-excerpt" lang="%lg"><p>
 		// add a nice little lang attribute where asked for
 		$before=str_replace('%lg', $excerpt_language, $before);
 		$after=str_replace('%lg', $excerpt_language, $after); // doubt this is needed!
+		
+		// add separators so that newsreaders which don't get formatting know when the post starts
+		$post_language=bb_get_the_language();
+		$post_separator_after="<p class=\"bb-post-separator\"><strong>[$post_language]</strong></p>";
+		$post_separator_before="<p class=\"bb-post-separator\"><strong>[$excerpt_language]</strong></p>";
 		// stick everything together
-		$the_other_excerpt = $before . $the_other_excerpt . $after;
-		print($the_other_excerpt);
+		$the_other_excerpt = $post_separator_before . $before . $the_other_excerpt . $after . $post_separator_after;
+		return($the_other_excerpt);
 	}
 }
+
+// this prints the other language excerpt
+function bb_the_other_excerpt()
+{
+	print(bb_get_the_other_excerpt());
+}
+
+// automatic insertion of other-excerpt
+
+function bb_embed_other_excerpt($content) {
+        $content = bb_get_the_other_excerpt() . $content;
+        return $content;
+}
+
 
 // ADMIN TWEAKING
 
@@ -134,7 +203,8 @@ function add_other_excerpt_textarea() {
 	echo '<div><textarea rows="4" cols="80" name="other-excerpt" id="other-excerpt">';
 	print($excerpt);
 	echo '</textarea></div></fieldset>';
-
+	// hidden field to avoid vanishing meta
+ echo '<input type="hidden" name="bunny-key" id="bunny-key" value="' . wp_create_nonce('bunny') . '" />'; 
 }
 
 // this one outputs a little box for typing in the post language (admin pages)
@@ -165,13 +235,15 @@ function add_language_box()
 // general custom field update function
 function bb_update_meta($id, $field)
 {
-	$setting = $_POST[$field];
+	// authorization to avoid vanishing meta    if ( !current_user_can('edit_post', $id) )        return $id;    // origination and intention to avoid vanishing meta    if ( !wp_verify_nonce($_POST['bunny-key'], 'bunny') )        return $id;
+	$setting = stripslashes($_POST[$field]);
 	$meta_exists=update_post_meta($id, $field, $setting);
 	if(!$meta_exists)
 	{
 		add_post_meta($id, $field, $setting);	
 	}
 }
+
 
 // update language custom field
 function bb_update_language($id)
@@ -199,4 +271,6 @@ add_action('publish_post', 'bb_update_language');
 add_action('edit_post', 'bb_update_other_excerpt');
 add_action('save_post', 'bb_update_other_excerpt');
 add_action('publish_post', 'bb_update_other_excerpt');
+
+add_action('the_content', 'bb_embed_other_excerpt');
 ?>
