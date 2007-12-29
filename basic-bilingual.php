@@ -1,7 +1,8 @@
 <?php
 /*
 Plugin Name: Basic Bilingual
-Plugin URI: http://climbtothestars.org/archives/2007/11/30/basic-bilingual-03-for-multilingual-blogging/Description: Makes managing your blog with two languages less cumbersome.
+Plugin URI: http://climbtothestars.org/archives/2007/11/30/basic-bilingual-03-for-multilingual-blogging/
+Description: Makes managing your blog with two languages less cumbersome.
 Version: 0.31
 Author: Stephanie Booth
 Author URI: http://climbtothestars.org/
@@ -235,7 +236,12 @@ function add_language_box()
 // general custom field update function
 function bb_update_meta($id, $field)
 {
-	// authorization to avoid vanishing meta    if ( !current_user_can('edit_post', $id) )        return $id;    // origination and intention to avoid vanishing meta    if ( !wp_verify_nonce($_POST['bunny-key'], 'bunny') )        return $id;
+	// authorization to avoid vanishing meta
+    if ( !current_user_can('edit_post', $id) )
+        return $id;
+    // origination and intention to avoid vanishing meta
+    if ( !wp_verify_nonce($_POST['bunny-key'], 'bunny') )
+        return $id;
 	$setting = stripslashes($_POST[$field]);
 	$meta_exists=update_post_meta($id, $field, $setting);
 	if(!$meta_exists)
