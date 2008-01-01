@@ -1,7 +1,7 @@
 === Plugin Name ===
 Contributors: Steph
 Donate link: http://www.amazon.de/exec/obidos/wishlist/3ZN17IJ7B1XW/
-Tags: multilingual, bilingual, translation
+Tags: multilingual, bilingual, translation, language, languages
 Requires at least: 2.0 (?)
 Tested up to: 2.3.1
 Stable tag: trunk
@@ -57,7 +57,7 @@ This is a problem up to version 0.3, sorry. See <a href="http://markjaquith.word
 
 == Screenshots ==
 
-1. Post editing screen with Basic Bilingual installed.
+1. Post editing screen with Basic Bilingual installed. This has changed now, the ugly language box has been replaced by a pretty DBX box in the sidebar.
 
 == Future Development ==
 

@@ -1,14 +1,13 @@
 <?php
 /*
 Plugin Name: Basic Bilingual
-Plugin URI: http://climbtothestars.org/archives/2007/11/30/basic-bilingual-03-for-multilingual-blogging/
-Description: Makes managing your blog with two languages less cumbersome.
+Plugin URI: http://climbtothestars.org/archives/2007/11/30/basic-bilingual-03-for-multilingual-blogging/Description: Makes managing your blog with two languages less cumbersome.
 Version: 0.31
 Author: Stephanie Booth
 Author URI: http://climbtothestars.org/
 
 
-  Copyright 2005-2007  Stephanie Booth  (email : steph@climbtothestars.org)
+  Copyright 2005-2008  Stephanie Booth  (email : steph@climbtothestars.org)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -42,6 +41,8 @@ CHANGELOG:
      - Added class to excerpt first-child
 0.31 - Attempted to fix vanishing excerpts problem -- see http://markjaquith.wordpress.com/2007/01/28/ 
        authorization-and-intentionorigination-verification-when-using-the-edit_post-hook/
+0.32 - Replaced the ugly "language box" in the admin section with a pretty DBX box. Drag it to the top
+	   of the page!      
 
 SETTINGS:
 =========
@@ -191,6 +192,18 @@ function bb_embed_other_excerpt($content) {
 }
 
 
+// automatic insertion of lang attribute on post div
+/* function bb_embed_lang($buffer) {
+	ob_start('bb_insert_lang_attribute');
+}
+
+function bb_insert_lang_attribute($buffer) {
+ 	$search='/(class="(.)*hentry(.)*")/';
+ 	$replace=\\1 . ' lang="' . bb_get_the_language() . '"';
+ 	return preg_replace($search, $replace, $buffer);	
+} not sure this will work */
+
+
 // ADMIN TWEAKING
 
 // output textarea to easily add other-excerpt in admin menu (addition to the post form)
@@ -208,7 +221,7 @@ function add_other_excerpt_textarea() {
  echo '<input type="hidden" name="bunny-key" id="bunny-key" value="' . wp_create_nonce('bunny') . '" />'; 
 }
 
-// this one outputs a little box for typing in the post language (admin pages)
+// DEPRECATED this one outputs a little box for typing in the post language (admin pages)
 function add_language_box()
 {
  	global $bb_languages;
@@ -231,17 +244,37 @@ function add_language_box()
 </fieldset>');
 }
 
+// this outputs a little box for typing in the post language, in the admin pages sidebar (posts and pages)
+function bll_add_dbx_language_box()
+{
+ 	global $bb_languages;
+ 	global $post;
+
+	// retrieving existing language, or setting to default if new post
+ 	$current_language=get_post_meta($post->ID, 'language', true);
+ 	if(empty($current_language))
+ 	{
+ 		$current_language=$bb_languages[0];
+ 	}
+ 	
+ 	print('<fieldset id="post-lang" class="dbx-box">
+ 	<h3 class="dbx-handle">');
+      echo __('Language');
+      print('</h3>
+	  <div class="dbx-content"><input type="text" name="language" size="7" value="');
+	  print($current_language);
+	  print('" id="language" /> <label for="language">2-letter code</label></div>
+</fieldset>');
+}
+
+
+
 // ACTION FUNCTIONS
 
 // general custom field update function
 function bb_update_meta($id, $field)
 {
-	// authorization to avoid vanishing meta
-    if ( !current_user_can('edit_post', $id) )
-        return $id;
-    // origination and intention to avoid vanishing meta
-    if ( !wp_verify_nonce($_POST['bunny-key'], 'bunny') )
-        return $id;
+	// authorization to avoid vanishing meta    if ( !current_user_can('edit_post', $id) )        return $id;    // origination and intention to avoid vanishing meta    if ( !wp_verify_nonce($_POST['bunny-key'], 'bunny') )        return $id;
 	$setting = stripslashes($_POST[$field]);
 	$meta_exists=update_post_meta($id, $field, $setting);
 	if(!$meta_exists)
@@ -265,10 +298,14 @@ function bb_update_other_excerpt($id)
 
 add_action('simple_edit_form', 'add_other_excerpt_textarea');
 add_action('edit_form_advanced', 'add_other_excerpt_textarea');
-add_action('simple_edit_form', 'add_language_box');
-add_action('edit_form_advanced', 'add_language_box');
-add_action('edit_page_form', 'add_language_box');
+// add_action('simple_edit_form', 'add_language_box');
+// add_action('edit_form_advanced', 'add_language_box');
+// add_action('edit_page_form', 'add_language_box');
 add_action('edit_page_form', 'add_other_excerpt_textarea');
+
+add_action('dbx_page_sidebar', 'bll_add_dbx_language_box');
+add_action('dbx_post_sidebar', 'bll_add_dbx_language_box');
+
 
 add_action('edit_post', 'bb_update_language');
 add_action('save_post', 'bb_update_language');
@@ -279,4 +316,13 @@ add_action('save_post', 'bb_update_other_excerpt');
 add_action('publish_post', 'bb_update_other_excerpt');
 
 add_action('the_content', 'bb_embed_other_excerpt');
+
+/* not sure this will work
+function bb_got_hentry()
+{
+	return false;
+	}
+if(bb_got_hentry())
+{	add_action('template_redirect', 'bb_embed_lang');
+} */
 ?>
