@@ -57,7 +57,7 @@ This is a problem up to version 0.3, sorry. See <a href="http://markjaquith.word
 
 == Screenshots ==
 
-1. Post editing screen with Basic Bilingual installed. This has changed now, the ugly language box has been replaced by a pretty DBX box in the sidebar.
+1. Post editing screen with Basic Bilingual installed. This has changed now, see http://www.flickr.com/photos/bunny/4102736550/.
 
 == Future Development ==
 
