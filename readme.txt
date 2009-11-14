@@ -2,8 +2,8 @@
 Contributors: Steph
 Donate link: http://www.amazon.de/exec/obidos/wishlist/3ZN17IJ7B1XW/
 Tags: multilingual, bilingual, translation, language, languages
-Requires at least: 2.0 (?)
-Tested up to: 2.7
+Requires at least: 2.0
+Tested up to: 2.8.6
 Stable tag: trunk
 
 Inserts an extra field which you can use to summarize your post in a second language.
