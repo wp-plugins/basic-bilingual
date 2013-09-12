@@ -4,7 +4,7 @@ Donate link: http://www.amazon.de/exec/obidos/wishlist/3ZN17IJ7B1XW/
 Tags: multilingual, bilingual, translation, language, languages
 Requires at least: 2.0
 Tested up to: 2.8.6
-Stable tag: trunk
+Stable tag: 0.4
 
 Inserts an extra field which you can use to summarize your post in a second language.
 
@@ -23,7 +23,7 @@ Both values are stored as postmeta.
 
 The "Other Language Excerpt" is automatically inserted right before the post content, in a div with class "other-excerpt" and the correct language attribute.
 
-Two template tags are provided: 
+Two template tags are provided:
 
 - `bb_the_time()`, which outputs a localized version of the date and time
 - `bb_the_language()`, which outputs the two-letter language code (for adding `lang="xx"` attributes to relevant HTML elements)
