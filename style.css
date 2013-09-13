@@ -1,0 +1,29 @@
+
+.other-excerpt {
+	font-style: italic;
+	background: #fff;
+	padding-left: 1em;
+	padding-right: 1em;
+}
+
+.other-excerpt:lang(fr) p.oe-first-child:before {
+	content: "[fr] ";
+	font-weight: bold;
+}
+
+.other-excerpt:lang(en) p.oe-first-child:before {
+	content: "[en] ";
+	font-weight: bold;
+}
+
+.hentry:lang(fr) .entry-title:after {
+  	content: " [fr]";
+	font-size: 80%;
+  	color: #bbb;
+}
+
+.hentry:lang(en) .entry-title:after {
+  	content: " [en]";
+	font-size: 80%;
+  	color: #bbb;
+}
