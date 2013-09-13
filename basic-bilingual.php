@@ -46,7 +46,8 @@ class BasicBilingualPlugin {
 			add_action('wp_enqueue_scripts', array(&$this, 'enqueue_scripts'));
 			add_action('the_content', array(&$this, 'filter_the_content'));
 			add_filter('the_title', array(&$this, 'filter_the_title'));
-			add_filter('locale', array(&$this, 'filter_the_locale'));
+			// Won't work...
+			// add_filter('locale', array(&$this, 'filter_the_locale'));
 		}
 	}
 
