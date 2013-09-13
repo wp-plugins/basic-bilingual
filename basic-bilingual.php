@@ -43,7 +43,8 @@ class BasicBilingualPlugin {
 		if (!is_admin()) {
 			wp_register_style('basic-bilingual', plugins_url('style.css', __FILE__), false, '0.5');
 			add_action('wp_enqueue_scripts', array(&$this, 'enqueue_scripts'));
-			add_action('the_content', array(&$this, 'filter_content'));
+			add_action('the_content', array(&$this, 'filter_the_content'));
+			add_filter('the_title', array(&$this, 'filter_the_title'));
 		}
 	}
 
@@ -61,21 +62,34 @@ class BasicBilingualPlugin {
 	}
 
 	function get_the_locale() {
+		// Doesn't really work actually...
 		$language = $this->get_the_language();
-		return $language . '_' . strtoupper($language);
+
+		if (!empty($language)) {
+			return $language . '_' . strtoupper($language);
+		} else {
+			// Let's return the WP locale
+			return get_locale();
+		}
 	}
 
 	function get_the_other_language() {
-		$languages = explode('|', BasicBilingualPlugin::LANGUAGES);
-		$others = array_diff($languages, array($this->get_the_language()));
-		return array_pop($others);
+		$language = $this->get_the_language();
+
+		if (!empty($language)) {
+			$languages = explode('|', BasicBilingualPlugin::LANGUAGES);
+			$others = array_diff($languages, array($language));
+			return array_pop($others);
+		} else {
+			return '';
+		}
 	}
 
 	function get_the_other_excerpt() {
 		return get_post_meta(get_the_ID(), BasicBilingualPlugin::OTHER_EXCERPT_KEY, true);
 	}
 
-	function get_the_other_content($before='<div class="other-excerpt" lang="%lg"><p class="oe-first-child">', $after='</p></div>') {
+	function get_the_other_content($before='<div class="other-excerpt" lang="%lg"><p>', $after='</p></div>') {
 		$the_other_excerpt = $this->get_the_other_excerpt();
 
 		// make sure there is an excerpt to display
@@ -83,26 +97,47 @@ class BasicBilingualPlugin {
 			// this is the excerpt language (easy, because it's bilingual)
 			$excerpt_language = $this->get_the_other_language();
 
-			// add a nice little lang attribute where asked for
-			$before = str_replace('%lg', $excerpt_language, $before);
-			$after = str_replace('%lg', $excerpt_language, $after); // doubt this is needed!
-
-			$content = $before . $the_other_excerpt . $after;
-
-			if (is_feed()) {
-				// add separators so that newsreaders which don't get formatting know when the post starts
-				$post_language = $this->get_the_language();
-				$post_separator_after = "<p class=\"bb-post-separator\"><strong>[$post_language]</strong></p>";
-				$post_separator_before = "<p class=\"bb-post-separator\"><strong>[$excerpt_language]</strong></p>";
-				$content = $post_separator_before . $content . $post_separator_after;
+			if (!empty($excerpt_language)) {
+				$the_other_excerpt = '<span class="bb-lang">[' . $excerpt_language . ']</span> ' . $the_other_excerpt;
+			} else {
+				// remove the html attribute there - we could say '%lg' includes the
+				// whole attribute thing but it would break compatibility and we don't want that
+				$before = str_replace('lang="%lg"', '', $before);
+				$before = str_replace("lang='%lg'", '', $before);
 			}
 
-			return $content;
+			// add a nice little lang attribute where asked for
+			$before = str_replace('%lg', $excerpt_language, $before);
+			$after = str_replace('%lg', $excerpt_language, $after);
+
+			return $before . $the_other_excerpt . $after;
 		}
+
+		return '';
 	}
 
-	function filter_content($content) {
+	function filter_the_content($content) {
+		$lang = $this->get_the_language();
+
+		if (!empty($lang)) {
+			// If we are in the feed then add a prefix like in the excerpt.
+			$prefix = (is_feed()) ? "[$lang] " : '';
+			$content = "<div lang='$lang'>$prefix$content</div>";
+		}
+
 		return $this->get_the_other_content() . $content;
+	}
+
+	function filter_the_title($title) {
+		if (in_the_loop()) {
+			$lang = $this->get_the_language();
+
+			if (!empty($lang)) {
+				$title = "<span lang='$lang'>$title <span class='bb-lang'>[$lang]</span></span>";
+			}
+		}
+
+		return $title;
 	}
 
 }
@@ -135,7 +170,7 @@ function bb_the_language() {
 }
 
 // this outputs the other language excerpt
-function bb_get_the_other_excerpt($before='<div class="other-excerpt" lang="%lg"><p class="oe-first-child">', $after='</p></div>') {
+function bb_get_the_other_excerpt($before='<div class="other-excerpt" lang="%lg"><p>', $after='</p></div>') {
 	global $the_basic_bilingual_plugin;
 	return $the_basic_bilingual_plugin->get_the_other_content($before, $after);
 }
