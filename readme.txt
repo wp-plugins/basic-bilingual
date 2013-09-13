@@ -1,14 +1,16 @@
 === Plugin Name ===
-Contributors: Steph
+Contributors: Steph, cvedovini
 Donate link: http://www.amazon.de/exec/obidos/wishlist/3ZN17IJ7B1XW/
 Tags: multilingual, bilingual, translation, language, languages
-Requires at least: 2.0
-Tested up to: 2.8.6
+Requires at least: 2.7
+Tested up to: 3.6
 Stable tag: 0.4
-
-Inserts an extra field which you can use to summarize your post in a second language.
+License: GPLv2
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
+
+Inserts an extra field which you can use to summarize your post in a second language.
 
 You might want to check [my work on multilingualism online](http://climbtothestars.org/focus/multilingual) to understand what brought me to develop this plugin.
 
@@ -34,6 +36,42 @@ Two template tags are provided:
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. If your languages are other than [fr] and [en], edit the line `$bb_languages=array('en', 'fr');` at the beginning of the plugin file to reflect this.
 1. Edit your template with the template tags `bb_the_time()` and `bb_the_language()` if you wish (recommended).
+
+== Changelog ==
+
+= version 0.5 =
+- Rewrite plugin to use classes and modern stuff
+
+= version 0.4 =
+- Modified the be fully compatible with the last WordPress versions: drag the language and other-excerpt boxes -- code provided by Luca Palli http://video.monte-ceneri.org/ (27.09.2009)
+- Add the "Allow empty language" option on the new Options page (27.09.2009, Luca Palli)
+
+= version 0.33 =
+- Fixed a bunch of stuff, code provided kindly by Tim Isenheim http://www.freshlabs.de/journal/
+- Half-arsed attempt to make the interface look prettier (30.01.2009)
+
+= version 0.32 =
+- Replaced the ugly "language box" in the admin section with a pretty DBX box. Drag it to the top of the page!
+
+= version 0.31 =
+- Attempted to fix vanishing excerpts problem -- see http://markjaquith.wordpress.com/2007/01/28/authorization-and-intentionorigination-verification-when-using-the-edit_post-hook/
+
+= version 0.3 =
+- Added stripslashes to get rid of slash problem
+- No need to add template tag anymore for other-excerpt -- added automagically (30.11.2007)
+- Added class to excerpt first-child
+
+= version 0.21 =
+- Fixed for WP 2.0 by replacing $postdata->ID with $post->ID (31.12.2005)
+- Cosmetic changes to the edit form (03.01.2006)
+- added hooks to deal with pages (03.01.2006)
+
+= version 0.2 =
+- Fixed update bug for other-excerpt (function name was wrong in action statement!) 28.01.2005
+
+= version 0.1 =
+- Initial release
+
 
 == Frequently Asked Questions ==
 
