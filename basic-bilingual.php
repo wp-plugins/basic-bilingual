@@ -97,7 +97,7 @@ class BasicBilingualPlugin {
 		$content = '';
 
 		if (is_array($excerpts)) {
-			if ($this->get_use_accept_header()) {
+			if ($this->get_use_accept_header() && !is_feed()) {
 				$excerpts = $this->filter_excerpts($excerpts, $_SERVER['HTTP_ACCEPT_LANGUAGE']);
 			}
 
