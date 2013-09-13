@@ -39,6 +39,10 @@ Two template tags are provided:
 
 == Changelog ==
 
+= version 1.0 =
+- Excerpts in multiple languages
+- Option to filter excerpts based on Accept-Language HTTP header
+
 = version 0.5 =
 - Rewrite plugin to use classes and modern stuff
 
