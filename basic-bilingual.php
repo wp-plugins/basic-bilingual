@@ -46,6 +46,7 @@ class BasicBilingualPlugin {
 			add_action('wp_enqueue_scripts', array(&$this, 'enqueue_scripts'));
 			add_action('the_content', array(&$this, 'filter_the_content'));
 			add_filter('the_title', array(&$this, 'filter_the_title'));
+			add_filter('locale', array(&$this, 'filter_the_locale'));
 		}
 	}
 
@@ -78,9 +79,9 @@ class BasicBilingualPlugin {
 		return 'en';
 	}
 
-	function get_post_language() {
+	function get_post_language($default=false) {
 		$post_language = get_post_meta(get_the_ID(), BB_POST_LANGUAGE, true);
-		if (empty($post_language)) $post_language = $this->get_default_language();
+		if (empty($post_language)) $post_language = ($default) ? $default : $this->get_default_language();
 		return $post_language;
 	}
 
@@ -156,6 +157,14 @@ class BasicBilingualPlugin {
 		}
 
 		return $title;
+	}
+
+	function filter_the_locale($lang) {
+		if (is_singular()) {
+			return $this->get_post_language($lang);
+		}
+
+		return $lang;
 	}
 
 	function get_all_languages() {
