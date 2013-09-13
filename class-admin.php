@@ -107,7 +107,10 @@ class BasicBilingualAdmin {
 		return $links;
 	}
 
-	function options_page() { ?>
+	function options_page() {
+		if (isset($_GET['migrate'])) {
+			$this->migrate();
+		} ?>
 		<div class="wrap">
 			<?php screen_icon(); ?>
 			<h2><?php _e('Basic Bilingual Options', 'basic-bilingual'); ?></h2>
@@ -177,7 +180,17 @@ class BasicBilingualAdmin {
 						</form>
 					</div> <!-- .inside -->
 				</div> <!-- .postbox -->
-			</div></div> <!-- #main-container -->
+				<div class="postbox">
+					<h3 style="cursor:default;"><span><?php _e('Migration', 'basic-bilingual'); ?></span></h3>
+					<div class="inside">
+						<p>
+							<p><?php _e('If you have been using this plugin prior to version 1.0 then you will need to migrate your existing data.', 'basic-bilingual'); ?>
+								<?php _e('To migrate, first make sure to select the same two languages you had before in the box above and save the changes, then click on the "Migrate" button below.', 'basic-bilingual'); ?>')?></p>
+							<span class="submit"><a href="<?php echo site_url('/wp-admin/options-general.php?page=basic-bilingual&migrate'); ?>" class="button button-primary"><?php _e('Migrate data from old Plugin', 'basic-bilingual'); ?></a></span>
+						</p>
+					</div> <!-- .inside -->
+				</div> <!-- .postbox -->
+				</div></div> <!-- #main-container -->
 
 			<div id="side-container" class="postbox-container metabox-holder" style="width:24%;"><div style="margin:0 8px;">
 				<div class="postbox">
