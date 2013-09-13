@@ -20,31 +20,15 @@ class BasicBilingualAdmin {
 		add_meta_box('bb-post-excerpts', __( 'Excerpts', 'basic-bilingual' ), array(&$this, 'meta_box_post_excerpts'), 'page', 'normal');
 	}
 
-	function get_default_language() {
-		$all_languages = $this->get_all_languages();
-		$wp_language = explode('_', get_locale());
-		$wp_language = $wp_language[0];
-
-		if (isset($all_languages[$wp_language])) {
-			return $wp_language;
-		}
-
-		return 'en';
-	}
-
 	/**
 	 * Prints the inner fields for the language post/page section
 	 */
 	function meta_box_post_language() {
 		$site_languages = $this->plugin->get_site_languages();
-		$all_languages = $this->get_all_languages();
-		$default_language = $this->get_default_language();
+		$all_languages = $this->plugin->get_all_languages();
 
 		// retrieving existing language, or setting to default if new post
 		$post_language = $this->plugin->get_post_language();
-		if (empty($post_language)) {
-			$post_language = $default_language;
-		}
 
 		// Use nonce for verification
 		echo '<input type="hidden" name="bb_noncename" id="bb_noncename" value="' . wp_create_nonce(plugin_basename(__FILE__)) . '" />';
@@ -60,7 +44,7 @@ class BasicBilingualAdmin {
 	 */
 	function meta_box_post_excerpts() {
 		$site_languages = $this->plugin->get_site_languages();
-		$all_languages = $this->get_all_languages();
+		$all_languages = $this->plugin->get_all_languages();
 		$excerpts = $this->plugin->get_post_excerpts(); ?>
 
 		<style>
@@ -109,8 +93,15 @@ class BasicBilingualAdmin {
 
 	function options_page() {
 		if (isset($_GET['migrate'])) {
-			$this->migrate();
-		} ?>
+			$count = $this->migrate();
+			if ($count) {
+				$message = sprintf(_n('Successful migrated %d post or page.', 'Successful migrated %d posts and pages.',
+						$count, 'basic-bilingual'), $count);
+			} else {
+				$message = __('Nothing found to migrate.', 'basic-bilingual');
+			}?>
+			<div class="updated"><p><?php echo $message; ?></p></div>
+		<?php } ?>
 		<div class="wrap">
 			<?php screen_icon(); ?>
 			<h2><?php _e('Basic Bilingual Options', 'basic-bilingual'); ?></h2>
@@ -131,14 +122,16 @@ class BasicBilingualAdmin {
 								<th scope="row"><?php _e('Site languages', 'basic-bilingual'); ?>:</th>
 								<td><?php
 									$site_languages = $this->plugin->get_site_languages();
-									$all_languages = $this->get_all_languages();
-									$default_language = $this->get_default_language();
+									$all_languages = $this->plugin->get_all_languages();
+									$default_language = $this->plugin->get_default_language();
 
 									// Just make sure it's there...
 									if (!in_array($default_language, $site_languages)) {
 										$site_languages[] = $default_language;
 									} ?>
 
+									<p><?php _e('Select all the languages you will be using on that site.', 'basic-bilingual') ?>
+										<?php _e('The WordPress language is always selected, please see <a href="http://codex.wordpress.org/Installing_WordPress_in_Your_Language">Installing WordPress in Your Language</a> if you need to change it', 'basic-bilingual'); ?></p>
 									<div id="languages-list"><div id="site-languages">
 									<?php foreach ($site_languages as $lang):
 										$name = $all_languages[$lang];
@@ -172,7 +165,8 @@ class BasicBilingualAdmin {
 								<td>
 									<label><input type="checkbox" name="<?php echo BB_USE_ACCEPT_HEADER;?>"
 										value="1" <?php checked($this->plugin->get_use_accept_header()); ?> />&nbsp;
-										<?php _e('Use the Accept-Language header sent by the visitor\'s browser to decide what excerpts to show.', 'basic-bilingual') ?></label>
+										<?php _e('Use the Accept-Language header sent by the visitor\'s browser to decide what excerpts to show.', 'basic-bilingual') ?>
+										<?php _e('Deselect to always show all excerpts.', 'basic-bilingual') ?></label>
 								</td>
 							</tr>
 						</table>
@@ -185,7 +179,8 @@ class BasicBilingualAdmin {
 					<div class="inside">
 						<p>
 							<p><?php _e('If you have been using this plugin prior to version 1.0 then you will need to migrate your existing data.', 'basic-bilingual'); ?>
-								<?php _e('To migrate, first make sure to select the same two languages you had before in the box above and save the changes, then click on the "Migrate" button below.', 'basic-bilingual'); ?>')?></p>
+								<?php _e('To migrate, first make sure to select the same two languages you had before in the box above and save the changes, then click on the "Migrate" button below.', 'basic-bilingual'); ?></p>
+							<p><strong><?php _e('It is strongly recommend that you backup your database before proceeding.', 'basic-bilingual'); ?></strong></p>
 							<span class="submit"><a href="<?php echo site_url('/wp-admin/options-general.php?page=basic-bilingual&migrate'); ?>" class="button button-primary"><?php _e('Migrate data from old Plugin', 'basic-bilingual'); ?></a></span>
 						</p>
 					</div> <!-- .inside -->
@@ -267,80 +262,39 @@ class BasicBilingualAdmin {
 		return false;
 	}
 
-	function get_all_languages() {
-		static $languages;
+	function migrate() {
+		$site_languages = $this->plugin->get_site_languages();
 
-		if (!isset($languages)) {
-			$languages = array(
-				'ar' => __('Arabic', 'basic-bilingual'),
-				'az' => __('Azerbaijani', 'basic-bilingual'),
-				'bg' => __('Bulgarian', 'basic-bilingual'),
-				'bn' => __('Bengali', 'basic-bilingual'),
-				'bs' => __('Bosnian', 'basic-bilingual'),
-				'ca' => __('Catalan', 'basic-bilingual'),
-				'cs' => __('Czech', 'basic-bilingual'),
-				'cy' => __('Welsh', 'basic-bilingual'),
-				'da' => __('Danish', 'basic-bilingual'),
-				'de' => __('German', 'basic-bilingual'),
-				'el' => __('Greek', 'basic-bilingual'),
-				'en' => __('English', 'basic-bilingual'),
-				'eo' => __('Esperanto', 'basic-bilingual'),
-				'es' => __('Spanish', 'basic-bilingual'),
-				'et' => __('Estonian', 'basic-bilingual'),
-				'eu' => __('Basque', 'basic-bilingual'),
-				'fa' => __('Persian', 'basic-bilingual'),
-				'fi' => __('Finnish', 'basic-bilingual'),
-				'fr' => __('French', 'basic-bilingual'),
-				'fy' => __('Frisian', 'basic-bilingual'),
-				'ga' => __('Irish', 'basic-bilingual'),
-				'gl' => __('Galician', 'basic-bilingual'),
-				'he' => __('Hebrew', 'basic-bilingual'),
-				'hi' => __('Hindi', 'basic-bilingual'),
-				'hr' => __('Croatian', 'basic-bilingual'),
-				'hu' => __('Hungarian', 'basic-bilingual'),
-				'id' => __('Indonesian', 'basic-bilingual'),
-				'is' => __('Icelandic', 'basic-bilingual'),
-				'it' => __('Italian', 'basic-bilingual'),
-				'ja' => __('Japanese', 'basic-bilingual'),
-				'ka' => __('Georgian', 'basic-bilingual'),
-				'kk' => __('Kazakh', 'basic-bilingual'),
-				'km' => __('Khmer', 'basic-bilingual'),
-				'kn' => __('Kannada', 'basic-bilingual'),
-				'ko' => __('Korean', 'basic-bilingual'),
-				'lt' => __('Lithuanian', 'basic-bilingual'),
-				'lv' => __('Latvian', 'basic-bilingual'),
-				'mk' => __('Macedonian', 'basic-bilingual'),
-				'ml' => __('Malayalam', 'basic-bilingual'),
-				'mn' => __('Mongolian', 'basic-bilingual'),
-				'nb' => __('Norwegian Bokmal', 'basic-bilingual'),
-				'ne' => __('Nepali', 'basic-bilingual'),
-				'nl' => __('Dutch', 'basic-bilingual'),
-				'nn' => __('Norwegian Nynorsk', 'basic-bilingual'),
-				'pa' => __('Punjabi', 'basic-bilingual'),
-				'pl' => __('Polish', 'basic-bilingual'),
-				'pt' => __('Portuguese', 'basic-bilingual'),
-				'ro' => __('Romanian', 'basic-bilingual'),
-				'ru' => __('Russian', 'basic-bilingual'),
-				'sk' => __('Slovak', 'basic-bilingual'),
-				'sl' => __('Slovenian', 'basic-bilingual'),
-				'sq' => __('Albanian', 'basic-bilingual'),
-				'sr' => __('Serbian', 'basic-bilingual'),
-				'sv' => __('Swedish', 'basic-bilingual'),
-				'sw' => __('Swahili', 'basic-bilingual'),
-				'ta' => __('Tamil', 'basic-bilingual'),
-				'te' => __('Telugu', 'basic-bilingual'),
-				'th' => __('Thai', 'basic-bilingual'),
-				'tr' => __('Turkish', 'basic-bilingual'),
-				'tt' => __('Tatar', 'basic-bilingual'),
-				'uk' => __('Ukrainian', 'basic-bilingual'),
-				'ur' => __('Urdu', 'basic-bilingual'),
-				'vi' => __('Vietnamese', 'basic-bilingual'),
-				'zh' => __('Chinese', 'basic-bilingual')
-			);
-			asort($languages);
+		// The Query
+		$query = new WP_Query(array (
+			'meta_query' => array(array(
+				'key' => 'other-excerpt',
+				'compare' => 'EXISTS'))));
+
+		$count = 0;
+		while ($query->have_posts()) {
+			$query->next_post();
+			$post = $query->post;
+
+			$post_language = get_post_meta($post->ID, 'language', true);
+			$other_language = array_pop(array_diff($site_languages, array($post_language)));
+
+			$excerpt = $post->post_excerpt;
+			$other_excerpt = get_post_meta($post->ID, 'other-excerpt', true);
+
+			$other_excerpts = array();
+			if (!empty($excerpt)) $other_excerpts[$post_language] = $excerpt;
+			if (!empty($other_excerpt)) $other_excerpts[$other_language] = $other_excerpt;
+
+			update_post_meta($post->ID, BB_POST_LANGUAGE, $post_language);
+			update_post_meta($post->ID, BB_POST_EXCERPTS, $other_excerpts);
+
+			$count++;
 		}
 
-		return $languages;
+		// Restore original Post Data
+		wp_reset_postdata();
+		return $count;
 	}
 
 }

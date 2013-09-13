@@ -66,12 +66,29 @@ class BasicBilingualPlugin {
 		return get_option(BB_USE_ACCEPT_HEADER, false);
 	}
 
+	function get_default_language() {
+		$all_languages = $this->get_all_languages();
+		$wp_language = explode('_', get_locale());
+		$wp_language = $wp_language[0];
+
+		if (isset($all_languages[$wp_language])) {
+			return $wp_language;
+		}
+
+		return 'en';
+	}
+
 	function get_post_language() {
-		return get_post_meta(get_the_ID(), BB_POST_LANGUAGE, true);
+		$post_language = get_post_meta(get_the_ID(), BB_POST_LANGUAGE, true);
+		if (empty($post_language)) $post_language = $this->get_default_language();
+		return $post_language;
 	}
 
 	function get_post_excerpts() {
-		return get_post_meta(get_the_ID(), BB_POST_EXCERPTS, true);
+		$excerpts = get_post_meta(get_the_ID(), BB_POST_EXCERPTS, true);
+		if (!is_array($excerpts)) $excerpts = array();
+		$excerpts[$this->get_post_language()] = get_post()->post_excerpt;
+		return $excerpts;
 	}
 
 	function filter_excerpts($excerpts, $languages) {
@@ -139,6 +156,82 @@ class BasicBilingualPlugin {
 		}
 
 		return $title;
+	}
+
+	function get_all_languages() {
+		static $languages;
+
+		if (!isset($languages)) {
+			$languages = array(
+					'ar' => __('Arabic', 'basic-bilingual'),
+					'az' => __('Azerbaijani', 'basic-bilingual'),
+					'bg' => __('Bulgarian', 'basic-bilingual'),
+					'bn' => __('Bengali', 'basic-bilingual'),
+					'bs' => __('Bosnian', 'basic-bilingual'),
+					'ca' => __('Catalan', 'basic-bilingual'),
+					'cs' => __('Czech', 'basic-bilingual'),
+					'cy' => __('Welsh', 'basic-bilingual'),
+					'da' => __('Danish', 'basic-bilingual'),
+					'de' => __('German', 'basic-bilingual'),
+					'el' => __('Greek', 'basic-bilingual'),
+					'en' => __('English', 'basic-bilingual'),
+					'eo' => __('Esperanto', 'basic-bilingual'),
+					'es' => __('Spanish', 'basic-bilingual'),
+					'et' => __('Estonian', 'basic-bilingual'),
+					'eu' => __('Basque', 'basic-bilingual'),
+					'fa' => __('Persian', 'basic-bilingual'),
+					'fi' => __('Finnish', 'basic-bilingual'),
+					'fr' => __('French', 'basic-bilingual'),
+					'fy' => __('Frisian', 'basic-bilingual'),
+					'ga' => __('Irish', 'basic-bilingual'),
+					'gl' => __('Galician', 'basic-bilingual'),
+					'he' => __('Hebrew', 'basic-bilingual'),
+					'hi' => __('Hindi', 'basic-bilingual'),
+					'hr' => __('Croatian', 'basic-bilingual'),
+					'hu' => __('Hungarian', 'basic-bilingual'),
+					'id' => __('Indonesian', 'basic-bilingual'),
+					'is' => __('Icelandic', 'basic-bilingual'),
+					'it' => __('Italian', 'basic-bilingual'),
+					'ja' => __('Japanese', 'basic-bilingual'),
+					'ka' => __('Georgian', 'basic-bilingual'),
+					'kk' => __('Kazakh', 'basic-bilingual'),
+					'km' => __('Khmer', 'basic-bilingual'),
+					'kn' => __('Kannada', 'basic-bilingual'),
+					'ko' => __('Korean', 'basic-bilingual'),
+					'lt' => __('Lithuanian', 'basic-bilingual'),
+					'lv' => __('Latvian', 'basic-bilingual'),
+					'mk' => __('Macedonian', 'basic-bilingual'),
+					'ml' => __('Malayalam', 'basic-bilingual'),
+					'mn' => __('Mongolian', 'basic-bilingual'),
+					'nb' => __('Norwegian Bokmal', 'basic-bilingual'),
+					'ne' => __('Nepali', 'basic-bilingual'),
+					'nl' => __('Dutch', 'basic-bilingual'),
+					'nn' => __('Norwegian Nynorsk', 'basic-bilingual'),
+					'pa' => __('Punjabi', 'basic-bilingual'),
+					'pl' => __('Polish', 'basic-bilingual'),
+					'pt' => __('Portuguese', 'basic-bilingual'),
+					'ro' => __('Romanian', 'basic-bilingual'),
+					'ru' => __('Russian', 'basic-bilingual'),
+					'sk' => __('Slovak', 'basic-bilingual'),
+					'sl' => __('Slovenian', 'basic-bilingual'),
+					'sq' => __('Albanian', 'basic-bilingual'),
+					'sr' => __('Serbian', 'basic-bilingual'),
+					'sv' => __('Swedish', 'basic-bilingual'),
+					'sw' => __('Swahili', 'basic-bilingual'),
+					'ta' => __('Tamil', 'basic-bilingual'),
+					'te' => __('Telugu', 'basic-bilingual'),
+					'th' => __('Thai', 'basic-bilingual'),
+					'tr' => __('Turkish', 'basic-bilingual'),
+					'tt' => __('Tatar', 'basic-bilingual'),
+					'uk' => __('Ukrainian', 'basic-bilingual'),
+					'ur' => __('Urdu', 'basic-bilingual'),
+					'vi' => __('Vietnamese', 'basic-bilingual'),
+					'zh' => __('Chinese', 'basic-bilingual')
+			);
+			asort($languages);
+		}
+
+		return $languages;
 	}
 
 }

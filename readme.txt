@@ -2,7 +2,7 @@
 Contributors: Steph, cvedovini
 Donate link: http://www.amazon.de/exec/obidos/wishlist/3ZN17IJ7B1XW/
 Tags: multilingual, bilingual, translation, language, languages
-Requires at least: 2.7
+Requires at least: 3.5
 Tested up to: 3.6
 Stable tag: 0.4
 License: GPLv2
