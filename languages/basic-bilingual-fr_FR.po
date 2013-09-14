@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Basic Bilingual 1.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/basic-bilingual\n"
 "POT-Creation-Date: 2013-09-14 09:10:51+00:00\n"
-"PO-Revision-Date: 2013-09-14 16:58+0700\n"
+"PO-Revision-Date: 2013-09-14 17:02+0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -241,7 +241,7 @@ msgstr "Tamil"
 
 #: basic-bilingual.php:232
 msgid "Telugu"
-msgstr "%d article ou page a été migré avec succès."
+msgstr "Telugu"
 
 #: basic-bilingual.php:233
 msgid "Thai"
@@ -305,7 +305,7 @@ msgstr "Réglages"
 msgid "Successfully migrated %d post or page."
 msgid_plural "Successfully migrated %d posts and pages."
 msgstr[0] "%d article ou page a été migré avec succès."
-msgstr[1] "%d articles et pages ont été migrés avec succès."
+msgstr[1] "%d articles et pages ont été migré avec succès."
 
 #: class-admin.php:101
 msgid "Nothing found to migrate."
@@ -330,7 +330,7 @@ msgid ""
 "in Your Language</a> if you need to change it"
 msgstr ""
 "La langue de l'installation WordPress est toujours sélectionnée, merci de "
-"vous réferer à <a href=\"http://codex.wordpress.org/"
+"vous référer à <a href=\"http://codex.wordpress.org/"
 "Installing_WordPress_in_Your_Language\">cet article</a> si vous avez besoin "
 "de la changer"
 

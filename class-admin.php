@@ -116,7 +116,7 @@ class BasicBilingualAdmin {
 						</style>
 						<form method="post" action="options.php"><?php wp_nonce_field('update-options'); ?>
 						<input type="hidden" name="action" value="update" />
-						<input type="hidden" name="page_options" value="<?php echo BB_SITE_LANGUAGES . ',' . BB_USE_ACCEPT_HEADER;?>" />
+						<input type="hidden" name="page_options" value="<?php echo BB_SITE_LANGUAGES . ',' . BB_USE_ACCEPT_HEADER . ',' . BB_POSTFIX_TITLES;?>" />
 						<table class="form-table">
 							<tr valign="top">
 								<th scope="row"><?php _e('Site languages', 'basic-bilingual'); ?>:</th>
@@ -137,13 +137,13 @@ class BasicBilingualAdmin {
 										$name = $all_languages[$lang];
 										if ($lang == $default_language): ?>
 											<div>
-												<input type="hidden" name="<?php echo BB_SITE_LANGUAGES;?>[]" value="<?php echo $lang; ?>" />
+												<input type="hidden" name="<?php echo BB_SITE_LANGUAGES; ?>[]" value="<?php echo $lang; ?>" />
 												<label style="color:darkgray"><input type="checkbox" name="" value="" checked="true"
 													disabled="disabled" />&nbsp;<?php echo $name; ?> (<?php _e('default site language', 'basic-bilingual'); ?>)</label>
 											</div>
 										<?php else: ?>
 											<div>
-												<label><input type="checkbox" name="<?php echo BB_SITE_LANGUAGES;?>[]"
+												<label><input type="checkbox" name="<?php echo BB_SITE_LANGUAGES; ?>[]"
 													value="<?php echo $lang; ?>" checked="checked" />&nbsp;<?php echo $name; ?></label>
 											</div>
 										<?php endif; ?>
@@ -152,7 +152,7 @@ class BasicBilingualAdmin {
 									<?php foreach ($all_languages as $lang => $name): ?>
 										<?php if (!in_array($lang, $site_languages)): ?>
 											<div>
-												<label><input type="checkbox" name="<?php echo BB_SITE_LANGUAGES;?>[]"
+												<label><input type="checkbox" name="<?php echo BB_SITE_LANGUAGES; ?>[]"
 													value="<?php echo $lang; ?>" />&nbsp;<?php echo $name; ?></label>
 											</div>
 										<?php endif; ?>
@@ -163,10 +163,18 @@ class BasicBilingualAdmin {
 							<tr valign="top">
 								<th scope="row"><?php _e('Use Accept-Language header', 'basic-bilingual'); ?>:</th>
 								<td>
-									<label><input type="checkbox" name="<?php echo BB_USE_ACCEPT_HEADER;?>"
+									<label><input type="checkbox" name="<?php echo BB_USE_ACCEPT_HEADER; ?>"
 										value="1" <?php checked($this->plugin->get_use_accept_header()); ?> />&nbsp;
 										<?php _e('Use the Accept-Language header sent by the visitor\'s browser to decide what excerpts to show.', 'basic-bilingual') ?>
 										<?php _e('Deselect to always show all excerpts.', 'basic-bilingual') ?></label>
+								</td>
+							</tr>
+							<tr valign="top">
+								<th scope="row"><?php _e('Postfix titles with language code', 'basic-bilingual'); ?>:</th>
+								<td>
+									<label><input type="checkbox" name="<?php echo BB_POSTFIX_TITLES; ?>"
+										value="1" <?php checked($this->plugin->get_postfix_titles()); ?> />&nbsp;
+										<?php _e('Postfix titles with the language code so that visitors know what\'s the main language of the content (especially useful when the title appears in links).', 'basic-bilingual') ?></label>
 								</td>
 							</tr>
 						</table>

@@ -27,6 +27,7 @@ define('BB_POST_LANGUAGE', 'bb-post-language');
 define('BB_POST_EXCERPTS', 'bb-post-excerpts');
 define('BB_SITE_LANGUAGES', 'bb-site-languages');
 define('BB_USE_ACCEPT_HEADER', 'bb-use-accept-header');
+define('BB_POSTFIX_TITLES', 'bb-postfix-titles');
 
 
 class BasicBilingualPlugin {
@@ -46,7 +47,7 @@ class BasicBilingualPlugin {
 			add_action('wp_enqueue_scripts', array(&$this, 'enqueue_scripts'));
 			add_action('the_content', array(&$this, 'filter_the_content'));
 			add_filter('the_title', array(&$this, 'filter_the_title'));
-			// Won't work...
+			// Won't work as expected...
 			// add_filter('locale', array(&$this, 'filter_the_locale'));
 		}
 	}
@@ -66,6 +67,10 @@ class BasicBilingualPlugin {
 
 	function get_use_accept_header() {
 		return get_option(BB_USE_ACCEPT_HEADER, false);
+	}
+
+	function get_postfix_titles() {
+		return get_option(BB_POSTFIX_TITLES, true);
 	}
 
 	function get_default_language() {
@@ -152,8 +157,11 @@ class BasicBilingualPlugin {
 		if (in_the_loop()) {
 			$lang = $this->get_post_language();
 
-			if (!empty($lang)) {
-				$title = "<span lang='$lang'>$title <span class='bb-lang'>[$lang]</span></span>";
+			// Check that we actually have a language and that we did not already add our
+			// stuff, because this filter is called several times sometimes.
+			if (!empty($lang) && (strpos($title, "<span lang='$lang'>") === false)) {
+				$postfix = ($this->get_postfix_titles()) ? " <span class='bb-lang'>[$lang]</span>" : '';
+				$title = "<span lang='$lang'>$title$postfix</span>";
 			}
 		}
 
