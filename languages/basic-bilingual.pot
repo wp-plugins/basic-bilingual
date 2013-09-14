@@ -1,0 +1,399 @@
+# Copyright (C) 2013 Basic Bilingual
+# This file is distributed under the same license as the Basic Bilingual package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Basic Bilingual 1.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/basic-bilingual\n"
+"POT-Creation-Date: 2013-09-14 09:10:51+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2013-09-14 16:28+0700\n"
+"Last-Translator: \n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
+"X-Generator: Poedit 1.5.7\n"
+
+#: basic-bilingual.php:176
+msgid "Arabic"
+msgstr ""
+
+#: basic-bilingual.php:177
+msgid "Azerbaijani"
+msgstr ""
+
+#: basic-bilingual.php:178
+msgid "Bulgarian"
+msgstr ""
+
+#: basic-bilingual.php:179
+msgid "Bengali"
+msgstr ""
+
+#: basic-bilingual.php:180
+msgid "Bosnian"
+msgstr ""
+
+#: basic-bilingual.php:181
+msgid "Catalan"
+msgstr ""
+
+#: basic-bilingual.php:182
+msgid "Czech"
+msgstr ""
+
+#: basic-bilingual.php:183
+msgid "Welsh"
+msgstr ""
+
+#: basic-bilingual.php:184
+msgid "Danish"
+msgstr ""
+
+#: basic-bilingual.php:185
+msgid "German"
+msgstr ""
+
+#: basic-bilingual.php:186
+msgid "Greek"
+msgstr ""
+
+#: basic-bilingual.php:187
+msgid "English"
+msgstr ""
+
+#: basic-bilingual.php:188
+msgid "Esperanto"
+msgstr ""
+
+#: basic-bilingual.php:189
+msgid "Spanish"
+msgstr ""
+
+#: basic-bilingual.php:190
+msgid "Estonian"
+msgstr ""
+
+#: basic-bilingual.php:191
+msgid "Basque"
+msgstr ""
+
+#: basic-bilingual.php:192
+msgid "Persian"
+msgstr ""
+
+#: basic-bilingual.php:193
+msgid "Finnish"
+msgstr ""
+
+#: basic-bilingual.php:194
+msgid "French"
+msgstr ""
+
+#: basic-bilingual.php:195
+msgid "Frisian"
+msgstr ""
+
+#: basic-bilingual.php:196
+msgid "Irish"
+msgstr ""
+
+#: basic-bilingual.php:197
+msgid "Galician"
+msgstr ""
+
+#: basic-bilingual.php:198
+msgid "Hebrew"
+msgstr ""
+
+#: basic-bilingual.php:199
+msgid "Hindi"
+msgstr ""
+
+#: basic-bilingual.php:200
+msgid "Croatian"
+msgstr ""
+
+#: basic-bilingual.php:201
+msgid "Hungarian"
+msgstr ""
+
+#: basic-bilingual.php:202
+msgid "Indonesian"
+msgstr ""
+
+#: basic-bilingual.php:203
+msgid "Icelandic"
+msgstr ""
+
+#: basic-bilingual.php:204
+msgid "Italian"
+msgstr ""
+
+#: basic-bilingual.php:205
+msgid "Japanese"
+msgstr ""
+
+#: basic-bilingual.php:206
+msgid "Georgian"
+msgstr ""
+
+#: basic-bilingual.php:207
+msgid "Kazakh"
+msgstr ""
+
+#: basic-bilingual.php:208
+msgid "Khmer"
+msgstr ""
+
+#: basic-bilingual.php:209
+msgid "Kannada"
+msgstr ""
+
+#: basic-bilingual.php:210
+msgid "Korean"
+msgstr ""
+
+#: basic-bilingual.php:211
+msgid "Lithuanian"
+msgstr ""
+
+#: basic-bilingual.php:212
+msgid "Latvian"
+msgstr ""
+
+#: basic-bilingual.php:213
+msgid "Macedonian"
+msgstr ""
+
+#: basic-bilingual.php:214
+msgid "Malayalam"
+msgstr ""
+
+#: basic-bilingual.php:215
+msgid "Mongolian"
+msgstr ""
+
+#: basic-bilingual.php:216
+msgid "Norwegian Bokmal"
+msgstr ""
+
+#: basic-bilingual.php:217
+msgid "Nepali"
+msgstr ""
+
+#: basic-bilingual.php:218
+msgid "Dutch"
+msgstr ""
+
+#: basic-bilingual.php:219
+msgid "Norwegian Nynorsk"
+msgstr ""
+
+#: basic-bilingual.php:220
+msgid "Punjabi"
+msgstr ""
+
+#: basic-bilingual.php:221
+msgid "Polish"
+msgstr ""
+
+#: basic-bilingual.php:222
+msgid "Portuguese"
+msgstr ""
+
+#: basic-bilingual.php:223
+msgid "Romanian"
+msgstr ""
+
+#: basic-bilingual.php:224
+msgid "Russian"
+msgstr ""
+
+#: basic-bilingual.php:225
+msgid "Slovak"
+msgstr ""
+
+#: basic-bilingual.php:226
+msgid "Slovenian"
+msgstr ""
+
+#: basic-bilingual.php:227
+msgid "Albanian"
+msgstr ""
+
+#: basic-bilingual.php:228
+msgid "Serbian"
+msgstr ""
+
+#: basic-bilingual.php:229
+msgid "Swedish"
+msgstr ""
+
+#: basic-bilingual.php:230
+msgid "Swahili"
+msgstr ""
+
+#: basic-bilingual.php:231
+msgid "Tamil"
+msgstr ""
+
+#: basic-bilingual.php:232
+msgid "Telugu"
+msgstr ""
+
+#: basic-bilingual.php:233
+msgid "Thai"
+msgstr ""
+
+#: basic-bilingual.php:234
+msgid "Turkish"
+msgstr ""
+
+#: basic-bilingual.php:235
+msgid "Tatar"
+msgstr ""
+
+#: basic-bilingual.php:236
+msgid "Ukrainian"
+msgstr ""
+
+#: basic-bilingual.php:237
+msgid "Urdu"
+msgstr ""
+
+#: basic-bilingual.php:238
+msgid "Vietnamese"
+msgstr ""
+
+#: basic-bilingual.php:239
+msgid "Chinese"
+msgstr ""
+
+#: class-admin.php:17 class-admin.php:18
+msgid "Language"
+msgstr ""
+
+#: class-admin.php:19 class-admin.php:20
+msgid "Excerpts"
+msgstr ""
+
+#: class-admin.php:77
+msgid ""
+"Write an excerpt of your post in the different languages you use on your "
+"blog. Short and sweet, or long and detailed."
+msgstr ""
+
+#: class-admin.php:84 class-admin.php:107
+msgid "Basic Bilingual Options"
+msgstr ""
+
+#. #-#-#-#-#  plugin.pot (Basic Bilingual 1.0)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#: class-admin.php:84
+msgid "Basic Bilingual"
+msgstr ""
+
+#: class-admin.php:90
+msgid "Settings"
+msgstr ""
+
+#: class-admin.php:98
+msgid "Successfully migrated %d post or page."
+msgid_plural "Successfully migrated %d posts and pages."
+msgstr[0] ""
+msgstr[1] ""
+
+#: class-admin.php:101
+msgid "Nothing found to migrate."
+msgstr ""
+
+#: class-admin.php:110
+msgid "Options"
+msgstr ""
+
+#: class-admin.php:122
+msgid "Site languages"
+msgstr ""
+
+#: class-admin.php:133
+msgid "Select all the languages you will be using on that site."
+msgstr ""
+
+#: class-admin.php:134
+msgid ""
+"The WordPress language is always selected, please see <a href=\"http://codex."
+"wordpress.org/Installing_WordPress_in_Your_Language\">Installing WordPress "
+"in Your Language</a> if you need to change it"
+msgstr ""
+
+#: class-admin.php:142
+msgid "default site language"
+msgstr ""
+
+#: class-admin.php:164
+msgid "Use Accept-Language header"
+msgstr ""
+
+#: class-admin.php:168
+msgid ""
+"Use the Accept-Language header sent by the visitor's browser to decide what "
+"excerpts to show."
+msgstr ""
+
+#: class-admin.php:169
+msgid "Deselect to always show all excerpts."
+msgstr ""
+
+#: class-admin.php:178
+msgid "Migration"
+msgstr ""
+
+#: class-admin.php:181
+msgid ""
+"If you have been using this plugin prior to version 1.0 then you will need "
+"to migrate your existing data."
+msgstr ""
+
+#: class-admin.php:182
+msgid ""
+"To migrate, first make sure to select the same two languages you had before "
+"in the box above and save the changes, then click on the \"Migrate\" button "
+"below."
+msgstr ""
+
+#: class-admin.php:183
+msgid ""
+"It is strongly recommend that you backup your database before proceeding."
+msgstr ""
+
+#: class-admin.php:184
+msgid "Migrate data from old Plugin"
+msgstr ""
+
+#: class-admin.php:192
+msgid "Do you like this Plugin?"
+msgstr ""
+
+#: class-admin.php:194
+msgid ""
+"Please consider offering something to Stephanie from her <a href=\"http://"
+"www.amazon.de/exec/obidos/wishlist/3ZN17IJ7B1XW/\">Amazon wishlist</a> or "
+"click on the Paypal button below to make a donation."
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://climbtothestars.org/wordpress/basic-bilingual/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Makes managing your blog with two languages less cumbersome."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Stephanie Booth"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://climbtothestars.org/"
+msgstr ""

@@ -95,7 +95,7 @@ class BasicBilingualAdmin {
 		if (isset($_GET['migrate'])) {
 			$count = $this->migrate();
 			if ($count) {
-				$message = sprintf(_n('Successful migrated %d post or page.', 'Successful migrated %d posts and pages.',
+				$message = sprintf(_n('Successfully migrated %d post or page.', 'Successfully migrated %d posts and pages.',
 						$count, 'basic-bilingual'), $count);
 			} else {
 				$message = __('Nothing found to migrate.', 'basic-bilingual');
