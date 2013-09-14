@@ -248,3 +248,40 @@ class BasicBilingualPlugin {
 
 global $the_basic_bilingual_plugin;
 $the_basic_bilingual_plugin = new BasicBilingualPlugin();
+
+
+// TEMPLATE TAGS
+function bb_the_time($format="%A %d.%m.%Y<br />%Hh%M") {
+	global $post, $the_basic_bilingual_plugin;
+	$language = $the_basic_bilingual_plugin->get_post_language();
+	$locale = $language . '_' . strtoupper($language);
+
+	// change locale
+	$old_locale = setlocale(LC_ALL,"0");
+	setlocale(LC_TIME, $locale);
+
+	// write it out -- this was lifted from the_time() iirc
+	$timestamp = strtotime($post->post_date);
+	echo strftime($format, $timestamp);
+
+	// make sure to restore it
+	setlocale(LC_TIME, $old_locale);
+}
+
+// this one outputs the language
+function bb_the_language() {
+	global $the_basic_bilingual_plugin;
+	echo $the_basic_bilingual_plugin->get_post_language();
+}
+
+// this outputs the other language excerpt
+function bb_get_the_other_excerpt($before='<div class="other-excerpt" lang="%lg"><p>', $after='</p></div>') {
+	global $the_basic_bilingual_plugin;
+	return $the_basic_bilingual_plugin->the_excerpts($before, $after);
+}
+
+// this prints the other language excerpt
+function bb_the_other_excerpt() {
+	global $the_basic_bilingual_plugin;
+	echo $the_basic_bilingual_plugin->get_the_other_content();
+}
