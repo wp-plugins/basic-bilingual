@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Basic Bilingual 1.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/basic-bilingual\n"
-"POT-Creation-Date: 2013-09-14 10:30:32+00:00\n"
+"POT-Creation-Date: 2013-09-15 08:30:39+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,259 +12,259 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: basic-bilingual.php:184
+#: basic-bilingual.php:206
 msgid "Arabic"
 msgstr ""
 
-#: basic-bilingual.php:185
+#: basic-bilingual.php:207
 msgid "Azerbaijani"
 msgstr ""
 
-#: basic-bilingual.php:186
+#: basic-bilingual.php:208
 msgid "Bulgarian"
 msgstr ""
 
-#: basic-bilingual.php:187
+#: basic-bilingual.php:209
 msgid "Bengali"
 msgstr ""
 
-#: basic-bilingual.php:188
+#: basic-bilingual.php:210
 msgid "Bosnian"
 msgstr ""
 
-#: basic-bilingual.php:189
+#: basic-bilingual.php:211
 msgid "Catalan"
 msgstr ""
 
-#: basic-bilingual.php:190
+#: basic-bilingual.php:212
 msgid "Czech"
 msgstr ""
 
-#: basic-bilingual.php:191
+#: basic-bilingual.php:213
 msgid "Welsh"
 msgstr ""
 
-#: basic-bilingual.php:192
+#: basic-bilingual.php:214
 msgid "Danish"
 msgstr ""
 
-#: basic-bilingual.php:193
+#: basic-bilingual.php:215
 msgid "German"
 msgstr ""
 
-#: basic-bilingual.php:194
+#: basic-bilingual.php:216
 msgid "Greek"
 msgstr ""
 
-#: basic-bilingual.php:195
+#: basic-bilingual.php:217
 msgid "English"
 msgstr ""
 
-#: basic-bilingual.php:196
+#: basic-bilingual.php:218
 msgid "Esperanto"
 msgstr ""
 
-#: basic-bilingual.php:197
+#: basic-bilingual.php:219
 msgid "Spanish"
 msgstr ""
 
-#: basic-bilingual.php:198
+#: basic-bilingual.php:220
 msgid "Estonian"
 msgstr ""
 
-#: basic-bilingual.php:199
+#: basic-bilingual.php:221
 msgid "Basque"
 msgstr ""
 
-#: basic-bilingual.php:200
+#: basic-bilingual.php:222
 msgid "Persian"
 msgstr ""
 
-#: basic-bilingual.php:201
+#: basic-bilingual.php:223
 msgid "Finnish"
 msgstr ""
 
-#: basic-bilingual.php:202
+#: basic-bilingual.php:224
 msgid "French"
 msgstr ""
 
-#: basic-bilingual.php:203
+#: basic-bilingual.php:225
 msgid "Frisian"
 msgstr ""
 
-#: basic-bilingual.php:204
+#: basic-bilingual.php:226
 msgid "Irish"
 msgstr ""
 
-#: basic-bilingual.php:205
+#: basic-bilingual.php:227
 msgid "Galician"
 msgstr ""
 
-#: basic-bilingual.php:206
+#: basic-bilingual.php:228
 msgid "Hebrew"
 msgstr ""
 
-#: basic-bilingual.php:207
+#: basic-bilingual.php:229
 msgid "Hindi"
 msgstr ""
 
-#: basic-bilingual.php:208
+#: basic-bilingual.php:230
 msgid "Croatian"
 msgstr ""
 
-#: basic-bilingual.php:209
+#: basic-bilingual.php:231
 msgid "Hungarian"
 msgstr ""
 
-#: basic-bilingual.php:210
+#: basic-bilingual.php:232
 msgid "Indonesian"
 msgstr ""
 
-#: basic-bilingual.php:211
+#: basic-bilingual.php:233
 msgid "Icelandic"
 msgstr ""
 
-#: basic-bilingual.php:212
+#: basic-bilingual.php:234
 msgid "Italian"
 msgstr ""
 
-#: basic-bilingual.php:213
+#: basic-bilingual.php:235
 msgid "Japanese"
 msgstr ""
 
-#: basic-bilingual.php:214
+#: basic-bilingual.php:236
 msgid "Georgian"
 msgstr ""
 
-#: basic-bilingual.php:215
+#: basic-bilingual.php:237
 msgid "Kazakh"
 msgstr ""
 
-#: basic-bilingual.php:216
+#: basic-bilingual.php:238
 msgid "Khmer"
 msgstr ""
 
-#: basic-bilingual.php:217
+#: basic-bilingual.php:239
 msgid "Kannada"
 msgstr ""
 
-#: basic-bilingual.php:218
+#: basic-bilingual.php:240
 msgid "Korean"
 msgstr ""
 
-#: basic-bilingual.php:219
+#: basic-bilingual.php:241
 msgid "Lithuanian"
 msgstr ""
 
-#: basic-bilingual.php:220
+#: basic-bilingual.php:242
 msgid "Latvian"
 msgstr ""
 
-#: basic-bilingual.php:221
+#: basic-bilingual.php:243
 msgid "Macedonian"
 msgstr ""
 
-#: basic-bilingual.php:222
+#: basic-bilingual.php:244
 msgid "Malayalam"
 msgstr ""
 
-#: basic-bilingual.php:223
+#: basic-bilingual.php:245
 msgid "Mongolian"
 msgstr ""
 
-#: basic-bilingual.php:224
+#: basic-bilingual.php:246
 msgid "Norwegian Bokmal"
 msgstr ""
 
-#: basic-bilingual.php:225
+#: basic-bilingual.php:247
 msgid "Nepali"
 msgstr ""
 
-#: basic-bilingual.php:226
+#: basic-bilingual.php:248
 msgid "Dutch"
 msgstr ""
 
-#: basic-bilingual.php:227
+#: basic-bilingual.php:249
 msgid "Norwegian Nynorsk"
 msgstr ""
 
-#: basic-bilingual.php:228
+#: basic-bilingual.php:250
 msgid "Punjabi"
 msgstr ""
 
-#: basic-bilingual.php:229
+#: basic-bilingual.php:251
 msgid "Polish"
 msgstr ""
 
-#: basic-bilingual.php:230
+#: basic-bilingual.php:252
 msgid "Portuguese"
 msgstr ""
 
-#: basic-bilingual.php:231
+#: basic-bilingual.php:253
 msgid "Romanian"
 msgstr ""
 
-#: basic-bilingual.php:232
+#: basic-bilingual.php:254
 msgid "Russian"
 msgstr ""
 
-#: basic-bilingual.php:233
+#: basic-bilingual.php:255
 msgid "Slovak"
 msgstr ""
 
-#: basic-bilingual.php:234
+#: basic-bilingual.php:256
 msgid "Slovenian"
 msgstr ""
 
-#: basic-bilingual.php:235
+#: basic-bilingual.php:257
 msgid "Albanian"
 msgstr ""
 
-#: basic-bilingual.php:236
+#: basic-bilingual.php:258
 msgid "Serbian"
 msgstr ""
 
-#: basic-bilingual.php:237
+#: basic-bilingual.php:259
 msgid "Swedish"
 msgstr ""
 
-#: basic-bilingual.php:238
+#: basic-bilingual.php:260
 msgid "Swahili"
 msgstr ""
 
-#: basic-bilingual.php:239
+#: basic-bilingual.php:261
 msgid "Tamil"
 msgstr ""
 
-#: basic-bilingual.php:240
+#: basic-bilingual.php:262
 msgid "Telugu"
 msgstr ""
 
-#: basic-bilingual.php:241
+#: basic-bilingual.php:263
 msgid "Thai"
 msgstr ""
 
-#: basic-bilingual.php:242
+#: basic-bilingual.php:264
 msgid "Turkish"
 msgstr ""
 
-#: basic-bilingual.php:243
+#: basic-bilingual.php:265
 msgid "Tatar"
 msgstr ""
 
-#: basic-bilingual.php:244
+#: basic-bilingual.php:266
 msgid "Ukrainian"
 msgstr ""
 
-#: basic-bilingual.php:245
+#: basic-bilingual.php:267
 msgid "Urdu"
 msgstr ""
 
-#: basic-bilingual.php:246
+#: basic-bilingual.php:268
 msgid "Vietnamese"
 msgstr ""
 
-#: basic-bilingual.php:247
+#: basic-bilingual.php:269
 msgid "Chinese"
 msgstr ""
 
@@ -282,7 +282,7 @@ msgid ""
 "blog. Short and sweet, or long and detailed."
 msgstr ""
 
-#: class-admin.php:84 class-admin.php:107
+#: class-admin.php:84 class-admin.php:108
 msgid "Basic Bilingual Options"
 msgstr ""
 
@@ -296,94 +296,122 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: class-admin.php:98
+#: class-admin.php:99
 msgid "Successfully migrated %d post or page."
 msgid_plural "Successfully migrated %d posts and pages."
 msgstr[0] ""
 msgstr[1] ""
 
-#: class-admin.php:101
+#: class-admin.php:102
 msgid "Nothing found to migrate."
 msgstr ""
 
-#: class-admin.php:110
+#: class-admin.php:111
 msgid "Options"
 msgstr ""
 
-#: class-admin.php:122
+#: class-admin.php:123
 msgid "Site languages"
 msgstr ""
 
-#: class-admin.php:133
+#: class-admin.php:134
 msgid "Select all the languages you will be using on that site."
 msgstr ""
 
-#: class-admin.php:134
+#: class-admin.php:135
 msgid ""
 "The WordPress language is always selected, please see <a href=\"http://codex."
 "wordpress.org/Installing_WordPress_in_Your_Language\">Installing WordPress "
 "in Your Language</a> if you need to change it"
 msgstr ""
 
-#: class-admin.php:142
+#: class-admin.php:143
 msgid "default site language"
 msgstr ""
 
-#: class-admin.php:164
+#: class-admin.php:165
+msgid "Filter content automatically"
+msgstr ""
+
+#: class-admin.php:169
+msgid ""
+"Uncheck this option if you want to use template tags in your theme instead "
+"of letting the plugin do the work for you."
+msgstr ""
+
+#: class-admin.php:173
+msgid "Before excerpt"
+msgstr ""
+
+#: class-admin.php:177
+msgid ""
+"HTML to put before the excerpts when they are output into a post (use the "
+"%lg placeholder to specify where to write the language of the excerpt)."
+msgstr ""
+
+#: class-admin.php:181
+msgid "After excerpt"
+msgstr ""
+
+#: class-admin.php:185
+msgid "HTML to put after the excerpts."
+msgstr ""
+
+#: class-admin.php:189
 msgid "Use Accept-Language header"
 msgstr ""
 
-#: class-admin.php:168
+#: class-admin.php:193
 msgid ""
 "Use the Accept-Language header sent by the visitor's browser to decide what "
 "excerpts to show."
 msgstr ""
 
-#: class-admin.php:169
+#: class-admin.php:194
 msgid "Deselect to always show all excerpts."
 msgstr ""
 
-#: class-admin.php:173
+#: class-admin.php:198
 msgid "Postfix titles with language code"
 msgstr ""
 
-#: class-admin.php:177
+#: class-admin.php:202
 msgid ""
 "Postfix titles with the language code so that visitors know what's the main "
 "language of the content (especially useful when the title appears in links)."
 msgstr ""
 
-#: class-admin.php:186
+#: class-admin.php:211
 msgid "Migration"
 msgstr ""
 
-#: class-admin.php:189
+#: class-admin.php:214
 msgid ""
 "If you have been using this plugin prior to version 1.0 then you will need "
 "to migrate your existing data."
 msgstr ""
 
-#: class-admin.php:190
+#: class-admin.php:215
 msgid ""
 "To migrate, first make sure to select the same two languages you had before "
 "in the box above and save the changes, then click on the \"Migrate\" button "
 "below."
 msgstr ""
 
-#: class-admin.php:191
+#: class-admin.php:216
 msgid ""
 "It is strongly recommend that you backup your database before proceeding."
 msgstr ""
 
-#: class-admin.php:192
+#: class-admin.php:217
 msgid "Migrate data from old Plugin"
 msgstr ""
 
-#: class-admin.php:200
+#: class-admin.php:225
 msgid "Do you like this Plugin?"
 msgstr ""
 
-#: class-admin.php:202
+#: class-admin.php:227
 msgid ""
 "Please consider offering something to Stephanie from her <a href=\"http://"
 "www.amazon.de/exec/obidos/wishlist/3ZN17IJ7B1XW/\">Amazon wishlist</a> or "
