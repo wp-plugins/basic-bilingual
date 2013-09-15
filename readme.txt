@@ -94,7 +94,7 @@ This is a problem up to version 0.3, sorry. See <a href="http://markjaquith.word
 
 = Is the plugin working with cache plugins? =
 
-Not unless you use template tags and enclose them between `mfunc` tags (see you cache plugin's documentation about how to use those tags)
+Yes, unless you are using the "Use Language-Accept header' option. In that case you'll need to use template tags and enclose them between `mfunc` tags (see you cache plugin's documentation about how to use those tags)
 
 
 == Screenshots ==
