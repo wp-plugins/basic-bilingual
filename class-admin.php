@@ -92,6 +92,7 @@ class BasicBilingualAdmin {
 	}
 
 	function options_page() {
+		$options = array(BB_SITE_LANGUAGES, BB_USE_ACCEPT_HEADER, BB_POSTFIX_TITLES, BB_BEFORE_EXCERPT, BB_AFTER_EXCERPT, BB_AUTO_FILTER_CONTENT);
 		if (isset($_GET['migrate'])) {
 			$count = $this->migrate();
 			if ($count) {
@@ -116,7 +117,7 @@ class BasicBilingualAdmin {
 						</style>
 						<form method="post" action="options.php"><?php wp_nonce_field('update-options'); ?>
 						<input type="hidden" name="action" value="update" />
-						<input type="hidden" name="page_options" value="<?php echo BB_SITE_LANGUAGES . ',' . BB_USE_ACCEPT_HEADER . ',' . BB_POSTFIX_TITLES;?>" />
+						<input type="hidden" name="page_options" value="<?php echo implode(',', $options); ?>" />
 						<table class="form-table">
 							<tr valign="top">
 								<th scope="row"><?php _e('Site languages', 'basic-bilingual'); ?>:</th>
@@ -158,6 +159,30 @@ class BasicBilingualAdmin {
 										<?php endif; ?>
 									<?php endforeach; ?>
 									</div>
+								</td>
+							</tr>
+							<tr valign="top">
+								<th scope="row"><?php _e('Filter content automatically', 'basic-bilingual'); ?>:</th>
+								<td>
+									<label><input type="checkbox" name="<?php echo BB_AUTO_FILTER_CONTENT; ?>"
+										value="1" <?php checked($this->plugin->get_auto_filter_content()); ?> />&nbsp;
+										<?php _e('Uncheck this option if you want to use template tags in your theme instead of letting the plugin do the work for you.', 'basic-bilingual') ?></label>
+								</td>
+							</tr>
+							<tr valign="top">
+								<th scope="row"><?php _e('Before excerpt', 'basic-bilingual'); ?>:</th>
+								<td>
+									<label><input type="text" name="<?php echo BB_BEFORE_EXCERPT; ?>" class="large-text code"
+										value="<?php echo htmlspecialchars($this->plugin->get_before_excerpt()); ?>" /><br/>
+										<?php _e('HTML to put before the excerpts when they are output into a post (use the %lg placeholder to specify where to write the language of the excerpt).', 'basic-bilingual') ?></label>
+								</td>
+							</tr>
+							<tr valign="top">
+								<th scope="row"><?php _e('After excerpt', 'basic-bilingual'); ?>:</th>
+								<td>
+									<label><input type="text" name="<?php echo BB_AFTER_EXCERPT; ?>" class="large-text code"
+										value="<?php echo htmlspecialchars($this->plugin->get_after_excerpt()); ?>" /><br/>
+										<?php _e('HTML to put after the excerpts.', 'basic-bilingual') ?></label>
 								</td>
 							</tr>
 							<tr valign="top">

@@ -28,6 +28,9 @@ define('BB_POST_EXCERPTS', 'bb-post-excerpts');
 define('BB_SITE_LANGUAGES', 'bb-site-languages');
 define('BB_USE_ACCEPT_HEADER', 'bb-use-accept-header');
 define('BB_POSTFIX_TITLES', 'bb-postfix-titles');
+define('BB_BEFORE_EXCERPT', 'bb-before-excerpt');
+define('BB_AFTER_EXCERPT', 'bb-after-excerpt');
+define('BB_AUTO_FILTER_CONTENT', 'bb-auto-filter-content');
 
 
 class BasicBilingualPlugin {
@@ -45,8 +48,12 @@ class BasicBilingualPlugin {
 		if (!is_admin()) {
 			wp_register_style('basic-bilingual', plugins_url('style.css', __FILE__), false, '0.5');
 			add_action('wp_enqueue_scripts', array(&$this, 'enqueue_scripts'));
-			add_action('the_content', array(&$this, 'filter_the_content'));
-			add_filter('the_title', array(&$this, 'filter_the_title'));
+
+			if ($this->get_auto_filter_content()) {
+				add_action('the_content', array(&$this, 'filter_the_content'));
+				add_filter('the_title', array(&$this, 'filter_the_title'));
+			}
+
 			// Won't work as expected...
 			// add_filter('locale', array(&$this, 'filter_the_locale'));
 		}
@@ -71,6 +78,18 @@ class BasicBilingualPlugin {
 
 	function get_postfix_titles() {
 		return get_option(BB_POSTFIX_TITLES, true);
+	}
+
+	function get_before_excerpt() {
+		return get_option(BB_BEFORE_EXCERPT, '<blockquote class="other-excerpt" lang="%lg"><p>');
+	}
+
+	function get_after_excerpt() {
+		return get_option(BB_AFTER_EXCERPT, '</p></blockquote>');
+	}
+
+	function get_auto_filter_content() {
+		return get_option(BB_AUTO_FILTER_CONTENT, true);
 	}
 
 	function get_default_language() {
@@ -115,12 +134,15 @@ class BasicBilingualPlugin {
 		return $filtered;
 	}
 
-	function the_excerpts($before='<div class="other-excerpt" lang="%lg"><p>', $after='</p></div>') {
+	function the_excerpts($before=false, $after=false) {
 		$post_language = $this->get_post_language();
 		$excerpts = $this->get_post_excerpts();
 		$content = '';
 
-		if (is_array($excerpts)) {
+		if (!empty($excerpts)) {
+			if (!$before) $before = $this->get_before_excerpt();
+			if (!$after) $after = $this->get_after_excerpt();
+
 			if ($this->get_use_accept_header() && !is_feed()) {
 				$excerpts = $this->filter_excerpts($excerpts, $_SERVER['HTTP_ACCEPT_LANGUAGE']);
 			}
@@ -283,7 +305,7 @@ function bb_the_language() {
 }
 
 // this outputs the other language excerpt
-function bb_get_the_other_excerpt($before='<div class="other-excerpt" lang="%lg"><p>', $after='</p></div>') {
+function bb_get_the_other_excerpt($before=false, $after=false) {
 	global $the_basic_bilingual_plugin;
 	return $the_basic_bilingual_plugin->the_excerpts($before, $after);
 }
