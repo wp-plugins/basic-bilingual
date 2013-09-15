@@ -46,7 +46,7 @@ class BasicBilingualPlugin {
 		load_plugin_textdomain('basic-bilingual', false, dirname(plugin_basename(__FILE__)) . '/languages/' );
 
 		if (!is_admin()) {
-			wp_register_style('basic-bilingual', plugins_url('style.css', __FILE__), false, '0.5');
+			wp_register_style('basic-bilingual', plugins_url('style.css', __FILE__), false, '1.0');
 			add_action('wp_enqueue_scripts', array(&$this, 'enqueue_scripts'));
 
 			if ($this->get_auto_filter_content()) {
