@@ -4,18 +4,23 @@ Donate link: http://www.amazon.de/exec/obidos/wishlist/3ZN17IJ7B1XW/
 Tags: multilingual, bilingual, translation, language, languages
 Requires at least: 3.5
 Tested up to: 3.6.1
-Stable tag: 0.4
+Stable tag: 1.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
+
 == Description ==
 
+Allows you to set the language of individual posts and pages and to summarize them in other languages.
 
-Allows you to set language for individual posts and pages and to summarize your posts and pages in different languages.
+The excerpts are automatically inserted right before the post content, with the correct language attribute. The correct language attribute is also set on the post titles and original content.
+
+If you were using this plugin prior to version 1.0 you will have to migrate your posts and pages.
+1. Make sure your back-up your database
+1. Select the same 2 languages you were previously using in the "Site languages" option
+1. Press the "Migrate" button on the settings page
 
 You might want to check [my work on multilingualism online](http://climbtothestars.org/focus/multilingual) to understand what brought me to develop this plugin.
-
-The excerpts in other languages than the post's are automatically inserted right before the post content, in a div with class "other-excerpt" and the correct language attribute. The correct language attribute is also set on the post titles and original content.
 
 
 == Installation ==
@@ -23,11 +28,6 @@ The excerpts in other languages than the post's are automatically inserted right
 1. Upload `basic-bilingual` to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Select your site languages in the plugin's settings
-
-If you were using this plugin prior to version 1.0 you will have to migrate your posts and pages.
-1. Make sure your back-up your database
-1. Select the same 2 languages you were previously using in the "Site languages" option
-1. Press the "Migrate" button on the settings page
 
 
 == Changelog ==
@@ -80,7 +80,7 @@ No. Basic Bilingual gives you the possibility to write short summaries, or a com
 
 = Does it work with more than two languages? =
 
-YES!
+Yes, since version 1.0!
 
 = Aren't there more complete plugins out there if I want to make all my content available in more than one language? =
 
@@ -94,7 +94,7 @@ This is a problem up to version 0.3, sorry. See <a href="http://markjaquith.word
 
 = Is the plugin working with cache plugins? =
 
-Yes, unless you are using the "Use Language-Accept header' option. In that case you'll need to use template tags and enclose them between `mfunc` tags (see you cache plugin's documentation about how to use those tags)
+Yes, unless you are using the "Use Language-Accept header" option. In that case you'll need to use the template tags and enclose them between `mfunc` tags (see you cache plugin's documentation about how to use those tags).
 
 
 == Screenshots ==
