@@ -16,6 +16,7 @@ Allows you to set the language of individual posts and pages and to summarize th
 The excerpts are automatically inserted right before the post content, with the correct language attribute. The correct language attribute is also set on the post titles and original content.
 
 If you were using this plugin prior to version 1.0 you will have to migrate your posts and pages.
+
 1. Make sure your back-up your database
 1. Select the same 2 languages you were previously using in the "Site languages" option
 1. Press the "Migrate" button on the settings page
