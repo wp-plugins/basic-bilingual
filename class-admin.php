@@ -43,9 +43,15 @@ class BasicBilingualAdmin {
 	 * Prints the inner fields for the other excerpt_box post/page section
 	 */
 	function meta_box_post_excerpts() {
+		$post_language = $this->plugin->get_post_language();
 		$site_languages = $this->plugin->get_site_languages();
 		$all_languages = $this->plugin->get_all_languages();
-		$excerpts = $this->plugin->get_post_excerpts(); ?>
+		$excerpts = $this->plugin->get_post_excerpts();
+
+		// Place the post language at the end of the list
+		$site_languages = array_diff($site_languages, array($post_language));
+		$site_languages[] = $post_language;
+		?>
 
 		<style>
 			.excerpts-panel { display: none; background-color: white; border: 1px solid #dfdfdf; }
