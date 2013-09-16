@@ -35,7 +35,7 @@ class BasicBilingualAdmin {
 
 		echo '<select name="' . BB_POST_LANGUAGE . '" id="' . BB_POST_LANGUAGE . '">';
 		foreach ($site_languages as $lang) {
-			echo '<option value="' . $lang . '" ' . selected($current_language, $lang, false) . '>' . $all_languages[$lang] . '</option>';
+			echo '<option value="' . $lang . '" ' . selected($post_language, $lang, false) . '>' . $all_languages[$lang] . '</option>';
 		}
 		echo '</select>';	}
 
@@ -86,7 +86,7 @@ class BasicBilingualAdmin {
 	}
 
 	function add_settings_link($links) {
-		$url = site_url('/wp-admin/options-writing.php?basic-bilingual');
+		$url = site_url('/wp-admin/options-general.php?page=basic-bilingual');
 		$links[] = '<a href="' . $url . '">' . __('Settings') . '</a>';
 		return $links;
 	}
@@ -300,6 +300,7 @@ class BasicBilingualAdmin {
 
 		// The Query
 		$query = new WP_Query(array (
+			'posts_per_page' => -1,
 			'meta_query' => array(array(
 				'key' => 'other-excerpt',
 				'compare' => 'EXISTS'))));
