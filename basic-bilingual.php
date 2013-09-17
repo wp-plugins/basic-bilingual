@@ -5,7 +5,7 @@ Plugin URI: http://climbtothestars.org/wordpress/basic-bilingual/
 Description: Makes managing your blog with two languages less cumbersome.
 Author: Stephanie Booth
 Author URI: http://climbtothestars.org/
-Version: 1.0
+Version: 1.1
 
 # The code in this plugin is free software; you can redistribute the code aspects of
 # the plugin and/or modify the code under the terms of the GNU Lesser General
@@ -49,6 +49,12 @@ class BasicBilingualPlugin {
 			wp_register_style('basic-bilingual', plugins_url('style.css', __FILE__), false, '1.0');
 			add_action('wp_enqueue_scripts', array(&$this, 'enqueue_scripts'));
 
+			add_action('wp_loaded', array(&$this, 'flush_rules'));
+			add_filter('rewrite_rules_array', array(&$this, 'add_rewrite_rules'));
+			add_filter('query_vars', array(&$this, 'query_vars'));
+			add_action('pre_get_posts', array(&$this, 'posts_by_language'));
+			add_filter('template_include', array(&$this, 'template_include'));
+
 			if ($this->get_auto_filter_content()) {
 				add_action('the_content', array(&$this, 'filter_the_content'));
 				add_filter('the_title', array(&$this, 'filter_the_title'));
@@ -57,11 +63,62 @@ class BasicBilingualPlugin {
 			// Won't work as expected...
 			// add_filter('locale', array(&$this, 'filter_the_locale'));
 		}
+
+		// Must flush rules on deactivation
+		register_deactivation_hook(__FILE__, array(&$this, 'deactivate'));
 	}
 
 	function admin_init() {
 		require_once 'class-admin.php';
 		$this->admin = new BasicBilingualAdmin($this);
+	}
+
+	function deactivate() {
+		flush_rewrite_rules();
+	}
+
+	// flush_rules() if our rules are not yet included
+	function flush_rules(){
+		$rules = get_option('rewrite_rules');
+
+		if (!isset($rules['language/([a-z]{2})/?$'])) {
+			flush_rewrite_rules();
+		}
+	}
+
+	function add_rewrite_rules($rules) {
+		$newrules = array();
+		$newrules['language/([a-z]{2})/?$'] = 'index.php?bb-lang=$matches[1]';
+		$newrules['language/([a-z]{2})/page/(\d+)/?$'] = 'index.php?bb-lang=$matches[1]&paged=$matches[2]';
+		return $newrules + $rules;
+	}
+
+	function query_vars($vars) {
+		$vars[] = 'bb-lang';
+		return $vars;
+	}
+
+	function posts_by_language($query) {
+		if (isset($query->query_vars['bb-lang'])) {
+			$query->query_vars["meta_key"] = BB_POST_LANGUAGE;
+			$query->query_vars["meta_value"] = $query->query_vars['bb-lang'];
+		}
+
+		return $query;
+	}
+
+	function template_include($template) {
+		if (get_query_var('bb-lang')) {
+			$templates = array(
+					'language-' . get_query_var('bb-lang') . '.php',
+					'language.php',
+					'archive.php');
+			if (is_paged()) $templates[] = 'paged.php';
+			$templates[] = 'index.php';
+			return locate_template($templates);
+		}
+
+		return $template;
 	}
 
 	function enqueue_scripts() {

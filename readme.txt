@@ -33,6 +33,11 @@ You might want to check [my work on multilingualism online](http://climbtothesta
 
 == Changelog ==
 
+= version 1.1 =
+- support for "language" column and filter in the dashboard
+- support for archive pages based on the language of the post (eg. /language/en/)
+- support for language based archive templates (eg. language-en.php, language.php)
+
 = version 1.0 =
 - Excerpts in multiple languages
 - Option to filter excerpts based on Accept-Language HTTP header
