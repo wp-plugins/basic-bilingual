@@ -138,11 +138,11 @@ class BasicBilingualPlugin {
 	}
 
 	function get_before_excerpt() {
-		return get_option(BB_BEFORE_EXCERPT, '<blockquote class="other-excerpt" lang="%lg"><p>');
+		return get_option(BB_BEFORE_EXCERPT, '<blockquote class="other-excerpt" lang="%lg">');
 	}
 
 	function get_after_excerpt() {
-		return get_option(BB_AFTER_EXCERPT, '</p></blockquote>');
+		return get_option(BB_AFTER_EXCERPT, '</blockquote>');
 	}
 
 	function get_auto_filter_content() {
@@ -206,13 +206,15 @@ class BasicBilingualPlugin {
 
 			foreach ($excerpts as $lang => $excerpt) {
 				if (!empty($excerpt) && $lang != $post_language) {
-					$the_excerpt = '<span class="bb-lang">[' . $lang . ']</span> ' . $excerpt;
+					// Add some paragraphs
+					$excerpt = '<span class="bb-lang">[' . $lang . ']</span> ' . $excerpt;
+					$excerpt = wpautop($excerpt);
 
 					// add a nice little lang attribute where asked for
 					$the_before = str_replace('%lg', $lang, $before);
 					$the_after = str_replace('%lg', $lang, $after);
 
-					$content .= $the_before . $the_excerpt . $the_after;
+					$content .= $the_before . $excerpt . $the_after;
 				}
 			}
 		}

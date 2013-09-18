@@ -34,9 +34,10 @@ You might want to check [my work on multilingualism online](http://climbtothesta
 == Changelog ==
 
 = version 1.1 =
-- support for "language" column and filter in the dashboard
-- support for archive pages based on the language of the post (eg. /language/en/)
-- support for language based archive templates (eg. language-en.php, language.php)
+- Support for "language" column and filter in the dashboard
+- Support for archive pages based on the language of the post (eg. /language/en/)
+- Support for language based archive templates (eg. language-en.php, language.php)
+- Double and single line-breaks in excerpts are respectively converted to `<p>...</p>` and `<br/>` tags (like for the content)
 
 = version 1.0 =
 - Excerpts in multiple languages
