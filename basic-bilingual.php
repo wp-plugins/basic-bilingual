@@ -215,6 +215,10 @@ class BasicBilingualPlugin {
 					$the_after = str_replace('%lg', $lang, $after);
 
 					$content .= $the_before . $excerpt . $the_after;
+
+					// backward compatibility, removing extra <p>
+					$content = preg_replace('|<p([^>]*)>\s*<p>|im', '<p$1>', $content);
+					$content = preg_replace('|</p>\s*</p>|im', '</p>', $content);
 				}
 			}
 		}
