@@ -1,4 +1,4 @@
-=== Plugin Name ===
+=== Basic Bilingual ===
 Contributors: Steph, cvedovini
 Donate link: http://www.amazon.de/exec/obidos/wishlist/3ZN17IJ7B1XW/
 Tags: multilingual, bilingual, translation, language, languages
