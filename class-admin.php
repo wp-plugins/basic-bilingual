@@ -118,7 +118,7 @@ class BasicBilingualAdmin {
 			</ul>
 			<?php foreach ($site_languages as $lang): ?>
 			<div id="tab-<?php echo $lang; ?>" class="excerpts-panel"><textarea rows="10" cols="80" name="excerpt-<?php echo $lang; ?>"
-				id="excerpt-<?php echo $lang; ?>"><?php echo isset($excerpts[$lang]) ? $excerpts[$lang] : ''; ?></textarea></div>
+				id="excerpt-<?php echo $lang; ?>" lang="<?php echo $lang; ?>"><?php echo isset($excerpts[$lang]) ? $excerpts[$lang] : ''; ?></textarea></div>
 	    	<?php endforeach; ?>
 		</div>
 		<script>jQuery(document).ready(function($) {
