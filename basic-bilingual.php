@@ -33,9 +33,22 @@ define('BB_AFTER_EXCERPT', 'bb-after-excerpt');
 define('BB_AUTO_FILTER_CONTENT', 'bb-auto-filter-content');
 
 
+add_action('plugins_loaded', array('BasicBilingualPlugin', 'get_instance'));
+
 class BasicBilingualPlugin {
 
-	function BasicBilingualPlugin() {
+	private static $instance;
+
+	public static function get_instance() {
+		if (!self::$instance) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
+
+	function __construct() {
+		register_deactivation_hook(__FILE__, 'flush_rewrite_rules');
 		add_action('init', array(&$this, 'init'));
 		add_action('admin_menu', array(&$this, 'admin_init'));
 	}
@@ -48,24 +61,17 @@ class BasicBilingualPlugin {
 		if (!is_admin()) {
 			wp_register_style('basic-bilingual', plugins_url('style.css', __FILE__), false, '1.0');
 			add_action('wp_enqueue_scripts', array(&$this, 'enqueue_scripts'));
-
-			add_action('wp_loaded', array(&$this, 'flush_rules'));
-			add_filter('rewrite_rules_array', array(&$this, 'add_rewrite_rules'));
-			add_filter('query_vars', array(&$this, 'query_vars'));
-			add_action('pre_get_posts', array(&$this, 'posts_by_language'));
-			add_filter('template_include', array(&$this, 'template_include'));
-
-			if ($this->get_auto_filter_content()) {
-				add_action('the_content', array(&$this, 'filter_the_content'));
-				add_filter('the_title', array(&$this, 'filter_the_title'));
-			}
-
-			// Won't work as expected...
-			// add_filter('locale', array(&$this, 'filter_the_locale'));
 		}
 
-		// Must flush rules on deactivation
-		register_deactivation_hook(__FILE__, array(&$this, 'deactivate'));
+		if ($this->get_auto_filter_content()) {
+			add_action('the_content', array(&$this, 'filter_the_content'));
+			add_filter('the_title', array(&$this, 'filter_the_title'));
+		}
+
+		// Won't work as expected...
+		// add_filter('locale', array(&$this, 'filter_the_locale'));
+
+		$this->setup_rewrite_rules();
 	}
 
 	function admin_init() {
@@ -73,44 +79,64 @@ class BasicBilingualPlugin {
 		$this->admin = new BasicBilingualAdmin($this);
 	}
 
-	function deactivate() {
-		flush_rewrite_rules();
-	}
+	function setup_rewrite_rules() {
+		if (isset($_GET['action']) && $_GET['action'] == 'deactivate' &&
+				$_GET['plugin'] == 'basic-bilingual/basic-bilingual.php') {
+			// Don't do anything if we're deactivating this plugin
+			return;
+		}
 
-	// flush_rules() if our rules are not yet included
-	function flush_rules(){
+		global $wp_rewrite;
+		$langs = $this->get_site_languages();
+		$regexp = '(' . implode('|', $langs) . ')';
+		$category_base = get_option('category_base') ? get_option('category_base') : 'category';
+		$tag_base = get_option('tag_base') ? get_option('tag_base') : 'tag';
 		$rules = get_option('rewrite_rules');
 
-		if (!isset($rules['language/([a-z]{2})/?$'])) {
+		add_rewrite_tag('%lang%', $regexp, 'lang=');
+		add_filter('query_vars', array(&$this, 'query_vars'));
+		add_filter('post_link', array(&$this, 'post_link'), 10, 2);
+		add_action('pre_get_posts', array(&$this, 'posts_by_language'));
+		add_filter('template_include', array(&$this, 'template_include'));
+
+		add_permastruct('basic-bilingual-root', 'language/%lang%');
+		add_permastruct('basic-bilingual-date', '%lang%/%year%/%monthnum%/%day%');
+		add_permastruct('basic-bilingual-category', "%lang%/{$category_base}/%category%");
+		add_permastruct('basic-bilingual-tag', "%lang%/{$tag_base}/%tag%");
+		add_permastruct('basic-bilingual-author', "%lang%/{$wp_rewrite->author_base}/%author%");
+		add_permastruct('basic-bilingual-type', '%lang%/type/%type%');
+		add_permastruct('basic-bilingual-search', "%lang%/{$wp_rewrite->search_base}/%search%");
+
+		if (!isset($rules["language/$regexp/?$"])) {
 			flush_rewrite_rules();
 		}
 	}
 
-	function add_rewrite_rules($rules) {
-		$newrules = array();
-		$newrules['language/([a-z]{2})/?$'] = 'index.php?bb-lang=$matches[1]';
-		$newrules['language/([a-z]{2})/page/(\d+)/?$'] = 'index.php?bb-lang=$matches[1]&paged=$matches[2]';
-		return $newrules + $rules;
-	}
-
 	function query_vars($vars) {
-		$vars[] = 'bb-lang';
+		$vars[] = 'lang';
 		return $vars;
 	}
 
+	function post_link($permalink, $post) {
+		if (false === strpos($permalink, '%lang%'))	return $permalink;
+
+		$lang = urlencode($this->get_post_language());
+		return str_replace('%lang%', $lang, $permalink);
+	}
+
 	function posts_by_language($query) {
-		if (isset($query->query_vars['bb-lang'])) {
+		if (isset($query->query_vars['lang'])) {
 			$query->query_vars["meta_key"] = BB_POST_LANGUAGE;
-			$query->query_vars["meta_value"] = $query->query_vars['bb-lang'];
+			$query->query_vars["meta_value"] = $query->query_vars['lang'];
 		}
 
 		return $query;
 	}
 
 	function template_include($template) {
-		if (get_query_var('bb-lang')) {
+		if (get_query_var('lang')) {
 			$templates = array(
-					'language-' . get_query_var('bb-lang') . '.php',
+					'language-' . get_query_var('lang') . '.php',
 					'language.php',
 					'archive.php');
 			if (is_paged()) $templates[] = 'paged.php';
@@ -339,14 +365,12 @@ class BasicBilingualPlugin {
 
 }
 
-global $the_basic_bilingual_plugin;
-$the_basic_bilingual_plugin = new BasicBilingualPlugin();
-
 
 // TEMPLATE TAGS
 function bb_the_time($format="%A %d.%m.%Y<br />%Hh%M") {
-	global $post, $the_basic_bilingual_plugin;
-	$language = $the_basic_bilingual_plugin->get_post_language();
+	global $post;
+	$plugin = BasicBilingualPlugin::get_instance();
+	$language = $plugin->get_post_language();
 	$locale = $language . '_' . strtoupper($language);
 
 	// change locale
@@ -363,18 +387,18 @@ function bb_the_time($format="%A %d.%m.%Y<br />%Hh%M") {
 
 // this one outputs the language
 function bb_the_language() {
-	global $the_basic_bilingual_plugin;
-	echo $the_basic_bilingual_plugin->get_post_language();
+	$plugin = BasicBilingualPlugin::get_instance();
+	echo $plugin->get_post_language();
 }
 
 // this outputs the other language excerpt
 function bb_get_the_other_excerpt($before=false, $after=false) {
-	global $the_basic_bilingual_plugin;
-	return $the_basic_bilingual_plugin->the_excerpts($before, $after);
+	$plugin = BasicBilingualPlugin::get_instance();
+	return $plugin->the_excerpts($before, $after);
 }
 
 // this prints the other language excerpt
 function bb_the_other_excerpt() {
-	global $the_basic_bilingual_plugin;
-	echo $the_basic_bilingual_plugin->get_the_other_content();
+	$plugin = BasicBilingualPlugin::get_instance();
+	echo $plugin->get_the_other_content();
 }

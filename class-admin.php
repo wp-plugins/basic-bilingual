@@ -20,15 +20,15 @@ class BasicBilingualAdmin {
 	}
 
 	function admin_styles() { ?>
-		<style>.fixed #bb-lang { width: 10%; }</style><?php
+		<style>.fixed #lang { width: 10%; }</style><?php
 	}
 
 	function restrict_posts_by_lang() {
 		$site_languages = $this->plugin->get_site_languages();
 		$all_languages = $this->plugin->get_all_languages();
-		$filter = (isset($_GET['bb-lang'])) ? $_GET['bb-lang'] : '<none>';
+		$filter = (isset($_GET['lang'])) ? $_GET['lang'] : '<none>';
 
-		echo '<select name="bb-lang" id="bb-lang">';
+		echo '<select name="lang" id="lang">';
 		echo '<option value="">' .  __('View all languages') . '</option>';
 		foreach ($site_languages as $lang) {
 			echo '<option value="' . $lang . '" ' . selected($filter, $lang, false) . '>' . $all_languages[$lang] . '</option>';
@@ -38,8 +38,8 @@ class BasicBilingualAdmin {
 
 	function posts_where_lang($where) {
 		global $wpdb;
-		if (isset($_GET['bb-lang']) && !empty($_GET['bb-lang'])) {
-			$language = $_GET['bb-lang'];
+		if (isset($_GET['lang']) && !empty($_GET['lang'])) {
+			$language = $_GET['lang'];
 			$meta_key = BB_POST_LANGUAGE;
 			$where .= " AND ID IN (SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key='$meta_key' AND meta_value='$language')";
 		}
@@ -48,12 +48,12 @@ class BasicBilingualAdmin {
 	}
 
 	function post_columns($defaults) {
-		$defaults['bb-lang'] = __('Language', 'basic-bilingual');
+		$defaults['lang'] = __('Language', 'basic-bilingual');
 		return $defaults;
 	}
 
 	function custom_post_columns($column, $post_id) {
-		if ($column == 'bb-lang') {
+		if ($column == 'lang') {
 			$post_language = get_post_meta($post_id, BB_POST_LANGUAGE, true);
 			if (!empty($post_language)) {
 				$languages = $this->plugin->get_all_languages();
