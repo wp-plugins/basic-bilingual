@@ -135,22 +135,117 @@ class BasicBilingualAdmin {
 		<p><?php _e('Write an excerpt of your post in the different languages you use on your blog. Short and sweet, or long and detailed.', 'basic-bilingual'); ?></p><?php
 	}
 
-	/**
-	 * Adds a settings
-	 */
-	function add_settings() {
-		add_submenu_page('options-general.php', __('Basic Bilingual Options', 'basic-bilingual'), __('Basic Bilingual', 'basic-bilingual'), 'manage_options', 'basic-bilingual', array(&$this, 'options_page'));
-		add_filter('plugin_action_links_basic-bilingual/basic-bilingual.php', array(&$this, 'add_settings_link'));
-	}
-
 	function add_settings_link($links) {
 		$url = site_url('/wp-admin/options-general.php?page=basic-bilingual');
 		$links[] = '<a href="' . $url . '">' . __('Settings') . '</a>';
 		return $links;
 	}
 
+	function add_settings_field($id, $title, $callback) {
+		register_setting('basic-bilingual', $id);
+		add_settings_field($id, $title, array(&$this, $callback), 'basic-bilingual');
+	}
+
+	function settings_field_languages() {
+		$site_languages = $this->plugin->get_site_languages();
+		$all_languages = $this->plugin->get_all_languages();
+		$default_language = $this->plugin->get_default_language();
+
+		// Just make sure it's there...
+		if (!in_array($default_language, $site_languages)) {
+			$site_languages[] = $default_language;
+		} ?>
+		<style>
+			#languages-list { width: 25em; height: 16em; padding: 0.5em 0.8em; border: 1px solid #dfdfdf;
+				background-color: white; overflow: auto; border-radius: 3px; -moz-border-radius: 3px; }
+			#site-languages { border-bottom: 1px solid #dfdfdf; padding-bottom: 2px; }
+		</style>
+		<p><?php _e('Select all the languages you will be using on that site.', 'basic-bilingual') ?>
+			<?php _e('The WordPress language is always selected, please see <a href="http://codex.wordpress.org/Installing_WordPress_in_Your_Language">Installing WordPress in Your Language</a> if you need to change it.', 'basic-bilingual'); ?></p>
+		<div id="languages-list"><div id="site-languages">
+		<?php foreach ($site_languages as $lang):
+			$name = $all_languages[$lang];
+			if ($lang == $default_language): ?>
+				<div>
+					<input type="hidden" name="<?php echo BB_SITE_LANGUAGES; ?>[]" value="<?php echo $lang; ?>" />
+					<label style="color:darkgray"><input type="checkbox" name="" value="" checked="true"
+						disabled="disabled" />&nbsp;<?php echo $name; ?> (<?php _e('default site language', 'basic-bilingual'); ?>)</label>
+				</div>
+			<?php else: ?>
+				<div>
+					<label><input type="checkbox" name="<?php echo BB_SITE_LANGUAGES; ?>[]"
+						value="<?php echo $lang; ?>" checked="checked" />&nbsp;<?php echo $name; ?></label>
+				</div>
+			<?php endif; ?>
+		<?php endforeach; ?>
+		</div>
+		<?php foreach ($all_languages as $lang => $name): ?>
+			<?php if (!in_array($lang, $site_languages)): ?>
+				<div>
+					<label><input type="checkbox" name="<?php echo BB_SITE_LANGUAGES; ?>[]"
+						value="<?php echo $lang; ?>" />&nbsp;<?php echo $name; ?></label>
+				</div>
+			<?php endif; ?>
+		<?php endforeach; ?>
+		</div><?php
+	}
+
+	function settings_field_filter_content() { ?>
+		<label>
+			<input type="checkbox" name="<?php echo BB_AUTO_FILTER_CONTENT; ?>"
+				value="1" <?php checked($this->plugin->get_auto_filter_content()); ?> />&nbsp;<?php
+			_e('Uncheck this option if you want to use template tags in your theme instead of letting the plugin do the work for you.', 'basic-bilingual'); ?>
+		</label><?php
+	}
+
+	function settings_field_before_excerpt() { ?>
+		<label>
+			<input type="text" name="<?php echo BB_BEFORE_EXCERPT; ?>" class="large-text code"
+				value="<?php echo htmlspecialchars($this->plugin->get_before_excerpt()); ?>" /><br/><?php
+			_e('HTML to put before the excerpts when they are output into a post (use the %lg placeholder to specify where to write the language of the excerpt).', 'basic-bilingual'); ?>
+		</label><?php
+	}
+
+	function settings_field_after_excerpt() { ?>
+		<label>
+			<input type="text" name="<?php echo BB_AFTER_EXCERPT; ?>" class="large-text code"
+				value="<?php echo htmlspecialchars($this->plugin->get_after_excerpt()); ?>" /><br/><?php
+			_e('HTML to put after the excerpts.', 'basic-bilingual'); ?>
+		</label><?php
+	}
+
+	function settings_field_accept_header() { ?>
+		<label>
+			<input type="checkbox" name="<?php echo BB_USE_ACCEPT_HEADER; ?>"
+				value="1" <?php checked($this->plugin->get_use_accept_header()); ?> />&nbsp;<?php
+				_e('Use the Accept-Language header sent by the visitor\'s browser to decide what excerpts to show. Deselect to always show all excerpts.', 'basic-bilingual'); ?>
+		</label><?php
+	}
+
+	function settings_field_postfix_titles() { ?>
+		<label>
+			<input type="checkbox" name="<?php echo BB_POSTFIX_TITLES; ?>"
+				value="1" <?php checked($this->plugin->get_postfix_titles()); ?> />&nbsp;<?php
+				_e('Postfix titles with the language code so that visitors know what\'s the main language of the content (especially useful when the title appears in links).', 'basic-bilingual'); ?>
+		</label><?php
+	}
+
+	/**
+	 * Adds a settings
+	 */
+	function add_settings() {
+		add_submenu_page('options-general.php', __('Basic Bilingual Options', 'basic-bilingual'), __('Basic Bilingual', 'basic-bilingual'), 'manage_options', 'basic-bilingual', array(&$this, 'options_page'));
+		add_filter('plugin_action_links_basic-bilingual/basic-bilingual.php', array(&$this, 'add_settings_link'));
+		add_settings_section('default', '', '', 'basic-bilingual');
+		$this->add_settings_field(BB_SITE_LANGUAGES, __('Site languages', 'basic-bilingual'), 'settings_field_languages');
+		$this->add_settings_field(BB_AUTO_FILTER_CONTENT, __('Filter content automatically', 'basic-bilingual'), 'settings_field_filter_content');
+		$this->add_settings_field(BB_BEFORE_EXCERPT, __('Before excerpt', 'basic-bilingual'), 'settings_field_before_excerpt');
+		$this->add_settings_field(BB_AFTER_EXCERPT, __('After excerpt', 'basic-bilingual'), 'settings_field_after_excerpt');
+		$this->add_settings_field(BB_USE_ACCEPT_HEADER, __('Use Accept-Language header', 'basic-bilingual'), 'settings_field_accept_header');
+		$this->add_settings_field(BB_POSTFIX_TITLES, __('Postfix titles with language code', 'basic-bilingual'), 'settings_field_postfix_titles');
+	}
+
 	function options_page() {
-		$options = array(BB_SITE_LANGUAGES, BB_USE_ACCEPT_HEADER, BB_POSTFIX_TITLES, BB_BEFORE_EXCERPT, BB_AFTER_EXCERPT, BB_AUTO_FILTER_CONTENT);
 		if (isset($_GET['migrate'])) {
 			$count = $this->migrate();
 			if ($count) {
@@ -168,101 +263,11 @@ class BasicBilingualAdmin {
 				<div class="postbox">
 					<h3 style="cursor:default;"><span><?php _e('Options', 'basic-bilingual'); ?></span></h3>
 					<div class="inside">
-						<style>
-							#languages-list { width: 25em; height: 16em; padding: 0.5em 0.8em; border: 1px solid #dfdfdf;
-								background-color: white; overflow: auto; border-radius: 3px; -moz-border-radius: 3px; }
-							#site-languages { border-bottom: 1px solid #dfdfdf; padding-bottom: 2px; }
-						</style>
-						<form method="post" action="options.php"><?php wp_nonce_field('update-options'); ?>
-						<input type="hidden" name="action" value="update" />
-						<input type="hidden" name="page_options" value="<?php echo implode(',', $options); ?>" />
-						<table class="form-table">
-							<tr valign="top">
-								<th scope="row"><?php _e('Site languages', 'basic-bilingual'); ?>:</th>
-								<td><?php
-									$site_languages = $this->plugin->get_site_languages();
-									$all_languages = $this->plugin->get_all_languages();
-									$default_language = $this->plugin->get_default_language();
-
-									// Just make sure it's there...
-									if (!in_array($default_language, $site_languages)) {
-										$site_languages[] = $default_language;
-									} ?>
-
-									<p><?php _e('Select all the languages you will be using on that site.', 'basic-bilingual') ?>
-										<?php _e('The WordPress language is always selected, please see <a href="http://codex.wordpress.org/Installing_WordPress_in_Your_Language">Installing WordPress in Your Language</a> if you need to change it', 'basic-bilingual'); ?></p>
-									<div id="languages-list"><div id="site-languages">
-									<?php foreach ($site_languages as $lang):
-										$name = $all_languages[$lang];
-										if ($lang == $default_language): ?>
-											<div>
-												<input type="hidden" name="<?php echo BB_SITE_LANGUAGES; ?>[]" value="<?php echo $lang; ?>" />
-												<label style="color:darkgray"><input type="checkbox" name="" value="" checked="true"
-													disabled="disabled" />&nbsp;<?php echo $name; ?> (<?php _e('default site language', 'basic-bilingual'); ?>)</label>
-											</div>
-										<?php else: ?>
-											<div>
-												<label><input type="checkbox" name="<?php echo BB_SITE_LANGUAGES; ?>[]"
-													value="<?php echo $lang; ?>" checked="checked" />&nbsp;<?php echo $name; ?></label>
-											</div>
-										<?php endif; ?>
-									<?php endforeach; ?>
-									</div>
-									<?php foreach ($all_languages as $lang => $name): ?>
-										<?php if (!in_array($lang, $site_languages)): ?>
-											<div>
-												<label><input type="checkbox" name="<?php echo BB_SITE_LANGUAGES; ?>[]"
-													value="<?php echo $lang; ?>" />&nbsp;<?php echo $name; ?></label>
-											</div>
-										<?php endif; ?>
-									<?php endforeach; ?>
-									</div>
-								</td>
-							</tr>
-							<tr valign="top">
-								<th scope="row"><?php _e('Filter content automatically', 'basic-bilingual'); ?>:</th>
-								<td>
-									<label><input type="checkbox" name="<?php echo BB_AUTO_FILTER_CONTENT; ?>"
-										value="1" <?php checked($this->plugin->get_auto_filter_content()); ?> />&nbsp;
-										<?php _e('Uncheck this option if you want to use template tags in your theme instead of letting the plugin do the work for you.', 'basic-bilingual') ?></label>
-								</td>
-							</tr>
-							<tr valign="top">
-								<th scope="row"><?php _e('Before excerpt', 'basic-bilingual'); ?>:</th>
-								<td>
-									<label><input type="text" name="<?php echo BB_BEFORE_EXCERPT; ?>" class="large-text code"
-										value="<?php echo htmlspecialchars($this->plugin->get_before_excerpt()); ?>" /><br/>
-										<?php _e('HTML to put before the excerpts when they are output into a post (use the %lg placeholder to specify where to write the language of the excerpt).', 'basic-bilingual') ?></label>
-								</td>
-							</tr>
-							<tr valign="top">
-								<th scope="row"><?php _e('After excerpt', 'basic-bilingual'); ?>:</th>
-								<td>
-									<label><input type="text" name="<?php echo BB_AFTER_EXCERPT; ?>" class="large-text code"
-										value="<?php echo htmlspecialchars($this->plugin->get_after_excerpt()); ?>" /><br/>
-										<?php _e('HTML to put after the excerpts.', 'basic-bilingual') ?></label>
-								</td>
-							</tr>
-							<tr valign="top">
-								<th scope="row"><?php _e('Use Accept-Language header', 'basic-bilingual'); ?>:</th>
-								<td>
-									<label><input type="checkbox" name="<?php echo BB_USE_ACCEPT_HEADER; ?>"
-										value="1" <?php checked($this->plugin->get_use_accept_header()); ?> />&nbsp;
-										<?php _e('Use the Accept-Language header sent by the visitor\'s browser to decide what excerpts to show.', 'basic-bilingual') ?>
-										<?php _e('Deselect to always show all excerpts.', 'basic-bilingual') ?></label>
-								</td>
-							</tr>
-							<tr valign="top">
-								<th scope="row"><?php _e('Postfix titles with language code', 'basic-bilingual'); ?>:</th>
-								<td>
-									<label><input type="checkbox" name="<?php echo BB_POSTFIX_TITLES; ?>"
-										value="1" <?php checked($this->plugin->get_postfix_titles()); ?> />&nbsp;
-										<?php _e('Postfix titles with the language code so that visitors know what\'s the main language of the content (especially useful when the title appears in links).', 'basic-bilingual') ?></label>
-								</td>
-							</tr>
-						</table>
-						<?php submit_button(); ?>
-						</form>
+						<form method="POST" action="options.php"><?php
+						settings_fields('basic-bilingual');
+						do_settings_sections('basic-bilingual');
+						submit_button();
+						?></form>
 					</div> <!-- .inside -->
 				</div> <!-- .postbox -->
 				<div class="postbox">
@@ -271,7 +276,7 @@ class BasicBilingualAdmin {
 						<p>
 							<p><?php _e('If you have been using this plugin prior to version 1.0 then you will need to migrate your existing data.', 'basic-bilingual'); ?>
 								<?php _e('To migrate, first make sure to select the same two languages you had before in the box above and save the changes, then click on the "Migrate" button below.', 'basic-bilingual'); ?></p>
-							<p><strong><?php _e('It is strongly recommend that you backup your database before proceeding.', 'basic-bilingual'); ?></strong></p>
+							<p><strong><?php _e('It is strongly recommended that you backup your database before proceeding.', 'basic-bilingual'); ?></strong></p>
 							<span class="submit"><a href="<?php echo site_url('/wp-admin/options-general.php?page=basic-bilingual&migrate'); ?>" class="button button-primary"><?php _e('Migrate data from old Plugin', 'basic-bilingual'); ?></a></span>
 						</p>
 					</div> <!-- .inside -->
@@ -293,7 +298,7 @@ class BasicBilingualAdmin {
 						</div>
 						<p><?php _e('We also need volunteers to translate that plugin into more languages.
 								If you wish to help then contact <a href="https://twitter.com/stephtara">@stephtara</a>
-								on Twitter or see <a href="http://climbtothestars.org/contact/">Stephanie\'s contact page</a>.', 'wp-linkedin'); ?></p>
+								on Twitter or see <a href="http://climbtothestars.org/contact/">Stephanie\'s contact page</a>.', 'basic-bilingual'); ?></p>
 					</div> <!-- .inside -->
 				</div> <!-- .postbox -->
 				<div>
