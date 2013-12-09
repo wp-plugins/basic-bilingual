@@ -29,6 +29,10 @@ option
 You might want to check [my work on multilingualism online](http://climbtothestars.org/focus/multilingual)
 to understand what brought me to develop this plugin.
 
+We also welcome volunteers to translate that plugin into more languages. If you
+wish to help then contact [@stephtara](https://twitter.com/stephtara) on Twitter
+or see [Stephanie's contact page](http://climbtothestars.org/contact/).
+
 
 == Installation ==
 

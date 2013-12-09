@@ -6,6 +6,7 @@ Description: Makes managing your blog with two languages less cumbersome.
 Author: Stephanie Booth
 Author URI: http://climbtothestars.org/
 Version: 1.1
+Text Domain: basic-bilingual
 
 # The code in this plugin is free software; you can redistribute the code aspects of
 # the plugin and/or modify the code under the terms of the GNU Lesser General
