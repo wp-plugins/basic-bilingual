@@ -296,9 +296,8 @@ class BasicBilingualAdmin {
 							<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
 							</form>
 						</div>
-						<p><?php _e('We also need volunteers to translate that plugin into more languages.
-								If you wish to help then contact <a href="https://twitter.com/stephtara">@stephtara</a>
-								on Twitter or see <a href="http://climbtothestars.org/contact/">Stephanie\'s contact page</a>.', 'basic-bilingual'); ?></p>
+						<p><?php _e('We also need volunteers to translate that plugin into more languages.', 'basic-bilingual'); ?>
+							<?php _e('If you wish to help then contact <a href="https://twitter.com/stephtara">@stephtara</a> on Twitter or see <a href="http://climbtothestars.org/contact/">Stephanie\'s contact page</a>.', 'basic-bilingual'); ?></p>
 					</div> <!-- .inside -->
 				</div> <!-- .postbox -->
 				<div>
