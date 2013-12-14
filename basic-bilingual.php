@@ -266,7 +266,7 @@ class BasicBilingualPlugin {
 	}
 
 	function filter_the_title($title) {
-		if (in_the_loop()) {
+		if (in_the_loop() && !is_admin()) {
 			$lang = $this->get_post_language();
 
 			// Check that we actually have a language and that we did not already add our
