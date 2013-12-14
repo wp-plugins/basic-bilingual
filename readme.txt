@@ -4,7 +4,7 @@ Donate link: http://www.amazon.de/exec/obidos/wishlist/3ZN17IJ7B1XW/
 Tags: multilingual, bilingual, translation, language, languages
 Requires at least: 3.5
 Tested up to: 3.8
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -70,9 +70,9 @@ categories, authors and post type archives and for search). For example:
 = version 0.4 =
 - Modified the be fully compatible with the last WordPress versions: drag the
 language and other-excerpt boxes -- code provided by
-[Luca Palli](http://video.monte-ceneri.org/) (27.09.2009).
+[Luca Palli](http://lpal.li/) (27.09.2009).
 - Add the "Allow empty language" option on the new Options page -- code
-provided by [Luca Palli](http://video.monte-ceneri.org/) (27.09.2009).
+provided by [Luca Palli](http://lpal.li/) (27.09.2009).
 
 = version 0.33 =
 - Fixed a bunch of stuff, code provided kindly by
@@ -147,3 +147,15 @@ you'll need to use the template tags and enclose them between `mfunc` tags
 
 1. Post editing screen with Basic Bilingual installed.
 2. Basic Bilingual settings page.
+
+
+== Credits ==
+
+Following is the list of people who worked on this plugin.
+
+- [Stephanie Booth](http://climbtothestars.org/): Ideas and initial development.
+- [Tim Isenheim](http://www.freshlabs.de/journal/): Contributed bug fixes.
+- [Luca Palli](http://lpal.li/): Contributed bug fixes and features.
+- [Claude Vedovini](http://vedovini.net/): Took over development for v1.0.
+- [Nathalie Aynié](http://nathalieaynie.com/): Contributed the Italian
+translations.
