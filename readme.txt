@@ -43,6 +43,9 @@ or see [Stephanie's contact page](http://climbtothestars.org/contact/).
 
 == Changelog ==
 
+= version 1.2 =
+- Added Serbo-Croatian translations.
+
 = version 1.1 =
 - Double and single line-breaks in excerpts are respectively converted
 to `<p>...</p>` and `<br/>` tags (like for the content).
@@ -159,3 +162,5 @@ Following is the list of people who worked on this plugin.
 - [Claude Vedovini](http://vedovini.net/): Took over development for v1.0.
 - [Nathalie Aynié](http://nathalieaynie.com/): Contributed the Italian
 translations.
+- [Borisa Djuraskovic](http://www.webhostinghub.com/): Contributed the
+Serbo-Croatian translations.
