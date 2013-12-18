@@ -45,6 +45,7 @@ or see [Stephanie's contact page](http://climbtothestars.org/contact/).
 
 = version 1.2 =
 - Added Serbo-Croatian translations.
+- Fallback mechanism to load language files in a smarter way.
 
 = version 1.1 =
 - Double and single line-breaks in excerpts are respectively converted
