@@ -57,6 +57,7 @@ class BasicBilingualPlugin {
 	function init() {
 		// Make plugin available for translation
 		// Translations can be filed in the /languages/ directory
+		add_filter('load_textdomain_mofile', array(&$this, 'smarter_load_textdomain'), 10, 2);
 		load_plugin_textdomain('basic-bilingual', false, dirname(plugin_basename(__FILE__)) . '/languages/' );
 
 		if (!is_admin()) {
@@ -73,6 +74,21 @@ class BasicBilingualPlugin {
 		// add_filter('locale', array(&$this, 'filter_the_locale'));
 
 		$this->setup_rewrite_rules();
+	}
+
+	function smarter_load_textdomain($mofile, $domain) {
+		if ($domain == 'basic-bilingual' && !is_readable($mofile)) {
+			extract(pathinfo($mofile));
+			$pos = strrpos($filename, '_');
+
+			if ($pos !== false) {
+				# cut off the locale part, leaving the language part only
+				$filename = substr($filename, 0, $pos);
+				$mofile = $dirname . '/' . $filename . '.' . $extension;
+			}
+		}
+
+		return $mofile;
 	}
 
 	function admin_init() {
