@@ -160,8 +160,6 @@ class BasicBilingualAdmin {
 				background-color: white; overflow: auto; border-radius: 3px; -moz-border-radius: 3px; }
 			#site-languages { border-bottom: 1px solid #dfdfdf; padding-bottom: 2px; }
 		</style>
-		<p><?php _e('Select all the languages you will be using on that site.', 'basic-bilingual') ?>
-			<?php _e('The WordPress language is always selected, please see <a href="http://codex.wordpress.org/Installing_WordPress_in_Your_Language">Installing WordPress in Your Language</a> if you need to change it.', 'basic-bilingual'); ?></p>
 		<div id="languages-list"><div id="site-languages">
 		<?php foreach ($site_languages as $lang):
 			$name = $all_languages[$lang];
@@ -187,7 +185,10 @@ class BasicBilingualAdmin {
 				</div>
 			<?php endif; ?>
 		<?php endforeach; ?>
-		</div><?php
+		</div>
+		<p><em><?php _e('Select all the languages you will be using on that site.', 'basic-bilingual') ?>
+			<?php _e('The WordPress language is always selected, please see <a href="http://codex.wordpress.org/Installing_WordPress_in_Your_Language">Installing WordPress in Your Language</a> if you need to change it.', 'basic-bilingual'); ?></em></p>
+		<?php
 	}
 
 	function settings_field_filter_content() { ?>
@@ -199,19 +200,15 @@ class BasicBilingualAdmin {
 	}
 
 	function settings_field_before_excerpt() { ?>
-		<label>
-			<input type="text" name="<?php echo BB_BEFORE_EXCERPT; ?>" class="large-text code"
-				value="<?php echo htmlspecialchars($this->plugin->get_before_excerpt()); ?>" /><br/><?php
-			_e('HTML to put before the excerpts when they are output into a post (use the %lg placeholder to specify where to write the language of the excerpt).', 'basic-bilingual'); ?>
-		</label><?php
+		<p><input type="text" name="<?php echo BB_BEFORE_EXCERPT; ?>" class="large-text code"
+			value="<?php echo htmlspecialchars($this->plugin->get_before_excerpt()); ?>" /></p>
+		<p><em><?php _e('HTML to put before the excerpts when they are output into a post (use the %lg placeholder to specify where to write the language of the excerpt).', 'basic-bilingual'); ?></em></p><?php
 	}
 
 	function settings_field_after_excerpt() { ?>
-		<label>
-			<input type="text" name="<?php echo BB_AFTER_EXCERPT; ?>" class="large-text code"
-				value="<?php echo htmlspecialchars($this->plugin->get_after_excerpt()); ?>" /><br/><?php
-			_e('HTML to put after the excerpts.', 'basic-bilingual'); ?>
-		</label><?php
+		<p><input type="text" name="<?php echo BB_AFTER_EXCERPT; ?>" class="large-text code"
+			value="<?php echo htmlspecialchars($this->plugin->get_after_excerpt()); ?>" /></p>
+		<p><em><?php _e('HTML to put after the excerpts.', 'basic-bilingual'); ?></em></p><?php
 	}
 
 	function settings_field_accept_header() { ?>
