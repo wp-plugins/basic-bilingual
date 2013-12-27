@@ -45,6 +45,7 @@ or see [Stephanie's contact page](http://climbtothestars.org/contact/).
 
 = version 1.2 =
 - Added Serbo-Croatian translations.
+- Added Dutch translations.
 - Fallback mechanism to load language files in a smarter way.
 
 = version 1.1 =
@@ -165,3 +166,5 @@ Following is the list of people who worked on this plugin.
 translations.
 - [Borisa Djuraskovic](http://www.webhostinghub.com/): Contributed the
 Serbo-Croatian translations.
+- [Jan Spoelstra](http://www.linkedin.com/in/janspoelstra): Contributed the
+Dutch translations.
