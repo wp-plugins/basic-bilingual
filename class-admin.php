@@ -136,8 +136,8 @@ class BasicBilingualAdmin {
 	}
 
 	function add_settings_link($links) {
-		$url = site_url('/wp-admin/options-general.php?page=basic-bilingual');
-		$links[] = '<a href="' . $url . '">' . __('Settings') . '</a>';
+		$url = home_url('/wp-admin/options-general.php?page=basic-bilingual');
+		$links[] = '<a href="' . esc_url($url) . '">' . __('Settings') . '</a>';
 		return $links;
 	}
 
@@ -274,7 +274,7 @@ class BasicBilingualAdmin {
 							<p><?php _e('If you have been using this plugin prior to version 1.0 then you will need to migrate your existing data.', 'basic-bilingual'); ?>
 								<?php _e('To migrate, first make sure to select the same two languages you had before in the box above and save the changes, then click on the "Migrate" button below.', 'basic-bilingual'); ?></p>
 							<p><strong><?php _e('It is strongly recommended that you backup your database before proceeding.', 'basic-bilingual'); ?></strong></p>
-							<span class="submit"><a href="<?php echo site_url('/wp-admin/options-general.php?page=basic-bilingual&migrate'); ?>" class="button button-primary"><?php _e('Migrate data from old Plugin', 'basic-bilingual'); ?></a></span>
+							<span class="submit"><a href="<?php echo esc_url(home_url('/wp-admin/options-general.php?page=basic-bilingual&migrate')); ?>" class="button button-primary"><?php _e('Migrate data from old Plugin', 'basic-bilingual'); ?></a></span>
 						</p>
 					</div> <!-- .inside -->
 				</div> <!-- .postbox -->

@@ -52,14 +52,14 @@ class BasicBilingualPlugin {
 		register_deactivation_hook(__FILE__, 'flush_rewrite_rules');
 		add_action('init', array(&$this, 'init'));
 		add_action('admin_menu', array(&$this, 'admin_init'));
-	}
 
-	function init() {
 		// Make plugin available for translation
 		// Translations can be filed in the /languages/ directory
 		add_filter('load_textdomain_mofile', array(&$this, 'smarter_load_textdomain'), 10, 2);
 		load_plugin_textdomain('basic-bilingual', false, dirname(plugin_basename(__FILE__)) . '/languages/' );
+	}
 
+	function init() {
 		if (!is_admin()) {
 			wp_register_style('basic-bilingual', plugins_url('style.css', __FILE__), false, '1.0');
 			add_action('wp_enqueue_scripts', array(&$this, 'enqueue_scripts'));
