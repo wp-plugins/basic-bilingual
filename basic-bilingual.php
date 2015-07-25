@@ -51,7 +51,7 @@ class BasicBilingualPlugin {
 	function __construct() {
 		register_deactivation_hook(__FILE__, 'flush_rewrite_rules');
 		add_action('init', array(&$this, 'init'));
-		add_action('admin_menu', array(&$this, 'admin_init'));
+		add_action('admin_init', array(&$this, 'admin_init'));
 
 		// Make plugin available for translation
 		// Translations can be filed in the /languages/ directory
