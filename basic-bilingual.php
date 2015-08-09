@@ -5,7 +5,7 @@ Plugin URI: http://climbtothestars.org/wordpress/basic-bilingual/
 Description: Makes managing your blog with two languages less cumbersome.
 Author: Stephanie Booth
 Author URI: http://climbtothestars.org/
-Version: 1.2
+Version: 1.2.1
 Text Domain: basic-bilingual
 
 # The code in this plugin is free software; you can redistribute the code aspects of

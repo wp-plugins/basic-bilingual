@@ -2,7 +2,7 @@
 
 class BasicBilingualAdmin {
 
-	function BasicBilingualAdmin($plugin) {
+	function __construct($plugin) {
 		$this->plugin = $plugin;
 		$this->add_settings();
 		add_action('do_meta_boxes', array(&$this, 'customize_meta_boxes'));
@@ -255,7 +255,7 @@ class BasicBilingualAdmin {
 		<?php } ?>
 		<div class="wrap">
 			<?php screen_icon(); ?>
-			<h2><?php _e('Basic Bilingual Options', 'basic-bilingual'); ?></h2>
+			<h1><?php _e('Basic Bilingual Options', 'basic-bilingual'); ?></h1>
 			<div id="main-container" class="postbox-container metabox-holder" style="width:75%;"><div style="margin:0 8px;">
 				<div class="postbox">
 					<h3 style="cursor:default;"><span><?php _e('Options', 'basic-bilingual'); ?></span></h3>

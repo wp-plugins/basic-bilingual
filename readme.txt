@@ -3,7 +3,7 @@ Contributors: Steph, cvedovini
 Donate link: http://www.amazon.de/exec/obidos/wishlist/3ZN17IJ7B1XW/
 Tags: multilingual, bilingual, translation, language, languages
 Requires at least: 3.5
-Tested up to: 4.2
+Tested up to: 4.3
 Stable tag: 1.2
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -42,6 +42,9 @@ or see [Stephanie's contact page](http://climbtothestars.org/contact/).
 
 
 == Changelog ==
+
+= version 1.2.1 =
+- Changes for WordPress 4.3
 
 = version 1.2 =
 - Added Serbo-Croatian translations.
